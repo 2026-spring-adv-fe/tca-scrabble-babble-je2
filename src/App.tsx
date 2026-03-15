@@ -52,14 +52,44 @@ function App() {
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
           <h2 className="card-title">Leaderboard</h2>
-          <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+<div className="chat chat-start">
+  <div className="chat-bubble chat-bubble-primary">What kind of nonsense is this</div>
+</div>
+<div className="chat chat-start">
+  <div className="chat-bubble chat-bubble-secondary">
+    Put me on the Council and not make me a Master!??
+  </div>
+</div>
+<div className="chat chat-start">
+  <div className="chat-bubble chat-bubble-accent">
+    That's never been done in the history of the Jedi.
+  </div>
+</div>
+<div className="chat chat-start">
+  <div className="chat-bubble chat-bubble-neutral">It's insulting!</div>
+</div>
+<div className="chat chat-end">
+  <div className="chat-bubble chat-bubble-info">Calm down, Anakin.</div>
+</div>
+<div className="chat chat-end">
+  <div className="chat-bubble chat-bubble-success">You have been given a great honor.</div>
+</div>
+<div className="chat chat-end">
+  <div className="chat-bubble chat-bubble-warning">To be on the Council at your age.</div>
+</div>
+<div className="chat chat-end">
+  <div className="chat-bubble chat-bubble-error">It's never happened before.</div>
+</div>
         </div>
       </div>
 
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
           <h2 className="card-title">Leaderboard</h2>
-          <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+        {/* For TSX uncomment the commented types below */}
+        <span className="countdown font-mono text-6xl">
+          <span style={{"--value":count, "--digits":2} /* as React.CSSProperties */ } aria-live="polite">{count}</span>
+        </span>
         </div>
       </div>
 
