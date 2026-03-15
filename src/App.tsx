@@ -44,14 +44,20 @@ function App() {
       </div>
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
-          <h2 className="card-title">Leaderboard</h2>
-          <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+          <h2 className="card-title">What's the Move?</h2>
+            <label className="swap swap-flip text-3xl">
+              {/* this hidden checkbox controls the state */}
+              <input type="checkbox" />
+
+              <div className="swap-on">Play a Word🟩</div>
+              <div className="swap-off">🟥Swap Tiles</div>
+            </label>
         </div>
       </div>
 
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
-          <h2 className="card-title">Leaderboard</h2>
+          <h2 className="card-title">Dueling Notes</h2>
 <div className="chat chat-start">
   <div className="chat-bubble chat-bubble-primary">What kind of nonsense is this</div>
 </div>
@@ -85,7 +91,7 @@ function App() {
 
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
-          <h2 className="card-title">Leaderboard</h2>
+          <h2 className="card-title">Counting on Hit</h2>
         {/* For TSX uncomment the commented types below */}
         <span className="countdown font-mono text-6xl">
           <span style={{"--value":count, "--digits":2} /* as React.CSSProperties */ } aria-live="polite">{count}</span>
@@ -95,7 +101,7 @@ function App() {
 
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
-          <h2 className="card-title">Leaderboard</h2>
+          <h2 className="card-title">Timeline</h2>
       <ul className="timeline timeline-vertical">
   <li>
     <div className="timeline-start timeline-box">First Macintosh computer</div>
@@ -196,7 +202,7 @@ function App() {
 
       <div className="card bg-base-100 w-full shadow-lg">
         <div className="card-body p-2">
-          <h2 className="card-title">Leaderboard</h2>
+          <h2 className="card-title">Table Topping</h2>
 
 <div className="overflow-x-auto">
   <table className="table table-xs">
