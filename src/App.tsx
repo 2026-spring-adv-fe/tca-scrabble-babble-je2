@@ -7,7 +7,10 @@ function App() {
   const [count, setCount] = useState(0)
 
   return (
-    <div className='p-3'>
+    <div 
+      className='p-3'
+      data-theme='pastel'
+    >
       <div>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -57,37 +60,39 @@ function App() {
 
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
-          <h2 className="card-title">Dueling Notes</h2>
-<div className="chat chat-start">
-  <div className="chat-bubble chat-bubble-primary">What kind of nonsense is this</div>
-</div>
-<div className="chat chat-start">
-  <div className="chat-bubble chat-bubble-secondary">
-    Put me on the Council and not make me a Master!??
-  </div>
-</div>
-<div className="chat chat-start">
-  <div className="chat-bubble chat-bubble-accent">
-    That's never been done in the history of the Jedi.
-  </div>
-</div>
-<div className="chat chat-start">
-  <div className="chat-bubble chat-bubble-neutral">It's insulting!</div>
-</div>
-<div className="chat chat-end">
-  <div className="chat-bubble chat-bubble-info">Calm down, Anakin.</div>
-</div>
-<div className="chat chat-end">
-  <div className="chat-bubble chat-bubble-success">You have been given a great honor.</div>
-</div>
-<div className="chat chat-end">
-  <div className="chat-bubble chat-bubble-warning">To be on the Council at your age.</div>
-</div>
-<div className="chat chat-end">
-  <div className="chat-bubble chat-bubble-error">It's never happened before.</div>
-</div>
+          <h2 className="card-title">Scrabble Babble, A Tabletop-Game Companion-App</h2>
+      <div className="chat chat-start">
+        <div className="chat-bubble chat-bubble-primary">
+          Scrabble!
+          </div>
+      </div>
+      <div className="chat chat-end">
+        <div className="chat-bubble chat-bubble-success">
+          Babble!
         </div>
       </div>
+      <div className="chat chat-start">
+        <div className="chat-bubble chat-bubble-primary">
+          Wordsmiths match wits!
+        </div>
+      </div>
+      <div className="chat chat-end">
+        <div className="chat-bubble chat-bubble-success">
+          Math nerds rate words!
+          </div>
+      </div>
+      <div className="chat chat-start">
+        <div className="chat-bubble chat-bubble-primary">
+          Letters, meet Science!
+          </div>
+      </div>
+      <div className="chat chat-end">
+        <div className="chat-bubble chat-bubble-success">
+          The pleasure's all mind.
+          </div>
+      </div>
+              </div>
+            </div>
 
       <div className="card bg-base-100 w-full shadow-lg my-3">
         <div className="card-body p-2">
