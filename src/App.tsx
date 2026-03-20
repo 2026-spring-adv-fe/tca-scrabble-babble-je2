@@ -3,8 +3,19 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+type AppProps = {
+  initialCountValue: number;
+  foo?: string
+}
+
+const App: React.FC<AppProps> = (
+  {
+    initialCountValue,
+    foo,
+  }
+) => {
+
+  const [count, setCount] = useState(initialCountValue)
 
   return (
     <div 
@@ -24,6 +35,11 @@ function App() {
       >
          Vite + React
       </h1>
+      <p>
+        {
+          foo
+        }
+      </p>
       <div className="card">
         <button 
           onClick={() => setCount((count) => count + 1)}
