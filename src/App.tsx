@@ -9,9 +9,6 @@ import { Home } from './Home';
 import { Setup } from './Setup';
 import { Play } from './Play';
 
-
-
-
 const App = () => {
 
   return (
@@ -24,14 +21,12 @@ const App = () => {
               <Home />
             }
           />
-
           <Route 
             path='/setup'
             element={
               <Setup />
             }
           />
-
           <Route 
             path='/play'
             element={
@@ -41,8 +36,6 @@ const App = () => {
         </Routes>
       </HashRouter>
     </div>
-
   )
 }
-
 export default App
