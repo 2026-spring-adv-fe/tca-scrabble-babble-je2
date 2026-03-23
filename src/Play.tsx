@@ -1,7 +1,16 @@
 import { useNavigate } from "react-router";
+import type { GameResult } from "./GameResults";
+import { useState } from "react";
 
-export const Play = () => {
+type PlayProps = {
+    addNewGameResult: (g: GameResult) => void;
+};
+
+export const Play: React.FC<PlayProps> = ({ 
+    addNewGameResult
+}) => {
     const nav = useNavigate();
+    const [startTimestamp] = useState(new Date().toISOString());
 
     //We'll write code here. . .
 
@@ -14,10 +23,23 @@ export const Play = () => {
                 <button 
                     className="btn btn-primary btn-outline"
                     onClick={
-                        () => nav(-2)}
+                        () => {
+                            addNewGameResult({
+                                winner: "Snape",
+                                players: [
+                                    "Snape",
+                                    "Dumbledore",
+                                    "Voldemort",
+                                ],
+                                start: startTimestamp,
+                                end: new Date().toISOString(),
+                            });
+                            nav(-2);
+                        }
+                    }
                 >
                     Game Over
                 </button>
         </>
-    )
-}
+    );
+};
