@@ -8,6 +8,33 @@ import {
 import { Home } from './Home';
 import { Setup } from './Setup';
 import { Play } from './Play';
+import type { GameResult } from './GameResults';
+
+
+const dummyGameResults: GameResult[] = [
+    {
+        winner: "Harry",
+        players: [
+            "Harry",
+            "Hermione",
+            "Ron",
+        ],
+
+        start: "2026-01-16T01:33:35.465Z",
+        end: "2026-01-16T02:21:35.465Z"
+    },
+    {
+        winner: "Hermione",
+        players: [
+            "Harry",
+            "Hermione",
+            "Ron",
+        ],
+
+        start: "2026-01-16T03:13:35.465Z",
+        end: "2026-01-16T03:49:35.465Z"
+    },  
+];
 
 const App = () => {
 
