@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router";
-import type { GeneralFacts } from "./GameResults";
+import type { GeneralFacts, LeaderboardEntry } from "./GameResults";
 
 type HomeProps = {
     generalFacts: GeneralFacts
+    leaderboard: LeaderboardEntry[],
 };
 
 export const Home: React.FC<HomeProps> = ({
-    generalFacts
+    generalFacts,
+    leaderboard
 } ) => {
-
-    
-    
+ 
     const nav = useNavigate();
 
     //We'll write code here. . .
@@ -50,6 +50,44 @@ export const Home: React.FC<HomeProps> = ({
                                     <td>Longest Game</td>
                                     <th>{generalFacts.longestGame}</th>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div className="card bg-base-100 w-full shadow-lg my-5">
+                    <div className="card-body p-2">
+                        <h2 className="card-title">Wins-Losses Leaderboard</h2>
+                        <table className="table table-zebra">
+                            <thead>
+                                <tr>
+                                    <th>W</th>
+                                    <th>L</th>
+                                    <th>AVG</th>
+                                    <th>PLAYER</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    leaderboard.map(
+                                        x => (
+                                            <tr>
+                                                <td>
+                                                    { x.wins }                        
+                                                </td>
+                                                <td>
+                                                    { x.losses }                        
+                                                </td>
+                                                <td>
+                                                    { x.avg }                        
+                                                </td>
+                                               <td>
+                                                    { x.name }                        
+                                                </td>
+                                            </tr>
+                                        )
+                                    )
+                                }
+
                             </tbody>
                         </table>
                     </div>
