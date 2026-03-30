@@ -68,7 +68,7 @@ const App = () => {
   return (
     <div>
       <div 
-        className="navbar bg-primary text-primary-content"
+        className="navbar bg-primary text-primary-content overflow-x-hidden"
       >
         <p className='text-xl font-bold'>
           {
