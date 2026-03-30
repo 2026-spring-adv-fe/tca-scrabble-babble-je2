@@ -1,17 +1,22 @@
 import { useNavigate } from "react-router";
 import type { GeneralFacts, LeaderboardEntry } from "./GameResults";
-export const APP_TITLE = "Scrabble-Babble Scrabble Companion";
+export const APP_TITLE = "Scrabble-Babble! A Scrabble Companion";
 type HomeProps = {
     generalFacts: GeneralFacts
     leaderboard: LeaderboardEntry[],
+    setTitle: (t: string) => void;
 };
 
 export const Home: React.FC<HomeProps> = ({
     generalFacts,
-    leaderboard
+    leaderboard,
+    setTitle,
 } ) => {
- 
+
+    setTitle(APP_TITLE);
     const nav = useNavigate();
+
+
 
     //We'll write code here. . .
 
