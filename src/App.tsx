@@ -47,8 +47,8 @@ const App = () => {
   // React Hooks...
   //
 
-  // const[gameResults, setGameResults] = useState(dummyGameResults);
-  const [gameResults, setGameResults] = useState<GameResult[]>([]);
+  const[gameResults, setGameResults] = useState(dummyGameResults);
+  // const [gameResults, setGameResults] = useState<GameResult[]>([]);
 
   //
   // Calculated state and other functions
@@ -66,6 +66,13 @@ const App = () => {
 
   return (
     <div>
+      <div 
+        className="navbar bg-primary text-primary-content"
+      >
+      <p className='text-xl font-bold'>Scrabble Babble! A Scrabble Companion   
+      </p>
+
+      </div>
       <HashRouter>
         <Routes>
           <Route 
