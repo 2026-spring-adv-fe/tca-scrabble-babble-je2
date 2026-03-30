@@ -69,43 +69,47 @@ const App = () => {
       <div 
         className="navbar bg-primary text-primary-content"
       >
-      <p className='text-xl font-bold'>Scrabble Babble! A Scrabble Companion   
-      </p>
-
+        <p className='text-xl font-bold'>
+          Scrabble-Babble Scrabble Companion
+        </p>
       </div>
-      <HashRouter>
-        <Routes>
-          <Route 
-            path='/'
-            element={
-              <Home 
-                generalFacts={
-                  getGeneralFacts(gameResults)
-                }
-                leaderboard={
-                  getLeaderboard(gameResults)
-                }
-              />
-            }
-          />
-          <Route 
-            path='/setup'
-            element={
-              <Setup />
-            }
-          />
-          <Route 
-            path='/play'
-            element={
-              <Play 
-              addNewGameResult={
-                addNewGameResult
+      <div
+        className="p-3"
+      >
+        <HashRouter>        
+          <Routes>
+            <Route 
+              path='/'
+              element={
+                <Home 
+                  generalFacts={
+                    getGeneralFacts(gameResults)
+                  }
+                  leaderboard={
+                    getLeaderboard(gameResults)
+                  }
+                />
               }
-              />
-            }
-          />
-        </Routes>
-      </HashRouter>
+            />
+            <Route 
+              path='/setup'
+              element={
+                <Setup />
+              }
+            />
+            <Route 
+              path='/play'
+              element={
+                <Play 
+                addNewGameResult={
+                  addNewGameResult
+                }
+                />
+              }
+            />
+          </Routes>
+        </HashRouter>
+      </div>
     </div>
   )
 }

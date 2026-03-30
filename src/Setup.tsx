@@ -7,17 +7,14 @@ export const Setup = () => {
 
     //then return some jsx...
     return (
-        <>
-            <h1>
-                Home
-            </h1>
-                <button 
-                    className="btn btn-primary btn-outline"
-                    onClick={
-                        () => nav('/play')}
-                >
-                    Start the Game
-                </button>
+        <>  
+            <button 
+                className="btn btn-outline btn-secondary btn-lg w-full lg:w-64"
+                onClick={
+                    () => nav('/play')}
+            >
+                Start the Game
+            </button>
         </>
     )
 }

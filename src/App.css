@@ -1,5 +1,5 @@
 /* replaced original repo with "scrabble-babble-je2" and added to class org*/ 
 @import "tailwindcss";
 @plugin "daisyui"{
-  themes: light --default, dark --prefersdark, pastel;
+  themes: light --default, dark --prefersdark, night;
 };
