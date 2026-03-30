@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import type { GeneralFacts, LeaderboardEntry } from "./GameResults";
-
+export const APP_TITLE = "Scrabble-Babble Scrabble Companion";
 type HomeProps = {
     generalFacts: GeneralFacts
     leaderboard: LeaderboardEntry[],

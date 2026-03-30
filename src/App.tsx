@@ -5,7 +5,7 @@ import {
   Routes,
   Route,
 } from 'react-router';
-import { Home } from './Home';
+import { APP_TITLE, Home } from './Home';
 import { Setup } from './Setup';
 import { Play } from './Play';
 import { 
@@ -47,8 +47,9 @@ const App = () => {
   // React Hooks...
   //
 
-  const[gameResults, setGameResults] = useState(dummyGameResults);
+  const [gameResults, setGameResults] = useState(dummyGameResults);
   // const [gameResults, setGameResults] = useState<GameResult[]>([]);
+  const [title, setTitle] = useState(APP_TITLE);
 
   //
   // Calculated state and other functions
@@ -70,7 +71,9 @@ const App = () => {
         className="navbar bg-primary text-primary-content"
       >
         <p className='text-xl font-bold'>
-          Scrabble-Babble Scrabble Companion
+          {
+            title
+          }
         </p>
       </div>
       <div
