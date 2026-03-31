@@ -51,7 +51,7 @@ const App = () => {
   // const [gameResults, setGameResults] = useState<GameResult[]>([]);
   const [title, setTitle] = useState(APP_TITLE);
 
-  const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("cmyk");
 
   //
   // Calculated state and other functions
@@ -86,16 +86,16 @@ const App = () => {
             type="checkbox"
             onClick={
               () => setTheme(
-                theme === "dark"
-                  ? "light"
-                  : "dark"
+                theme === "cmyk"
+                  ? "night"
+                  : "cmyk"
               )}
 
           />
 
           {/* moon icon */}
           <svg
-            className="swap-on h-10 w-10 fill-current"
+            className="swap-off h-10 w-10 fill-current"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
@@ -104,7 +104,7 @@ const App = () => {
 
           {/* sun icon */}
           <svg
-            className="swap-off h-10 w-10 fill-current"
+            className="swap-on h-10 w-10 fill-current"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
