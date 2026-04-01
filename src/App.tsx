@@ -54,7 +54,11 @@ const App = () => {
 
   const [theme, setTheme] = useState("emerald");
 
-  const [currentPlayers, setCurrentPlayers] = useState<string[]>([]);
+  // this allows us to store the array of two items that comes back from the function
+  // rather than destructuring into the two consts (this happens further down the code)
+  // in destructuring the tuple, we refer by index [] whether first or second item in the array
+
+  const currentPlayersStateTuple = useState<string[]>([]);
 
   //
   // Calculated state and other functions
@@ -143,7 +147,7 @@ const App = () => {
                   previousPlayers={
                     getPreviousPlayers(gameResults)
                   }
-                  setCurrentPlayers={setCurrentPlayers}
+                  setCurrentPlayers={currentPlayersStateTuple[1]}
                 />
               }
              />
@@ -155,7 +159,7 @@ const App = () => {
                 addNewGameResult={
                   addNewGameResult
                 }
-                players={currentPlayers}
+                players={currentPlayersStateTuple[0]}
                 />
               }
             />
