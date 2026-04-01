@@ -11,6 +11,7 @@ import { Play } from './Play';
 import { 
     getGeneralFacts,
     getLeaderboard,
+    getPreviousPlayers,
     type GameResult,
   } from './GameResults';
 import { useState } from 'react';
@@ -51,7 +52,7 @@ const App = () => {
   // const [gameResults, setGameResults] = useState<GameResult[]>([]);
   const [title, setTitle] = useState(APP_TITLE);
 
-  const [theme, setTheme] = useState("cmyk");
+  const [theme, setTheme] = useState("caramellatte");
 
   //
   // Calculated state and other functions
@@ -86,9 +87,9 @@ const App = () => {
             type="checkbox"
             onClick={
               () => setTheme(
-                theme === "cmyk"
-                  ? "night"
-                  : "cmyk"
+                theme === "caramellatte"
+                  ? "luxury"
+                  : "caramellatte"
               )}
 
           />
@@ -137,6 +138,9 @@ const App = () => {
               element={
                 <Setup
                   setTitle={setTitle}
+                  previousPlayers={
+                    getPreviousPlayers(gameResults)
+                  }
                 />
               }
             />

@@ -1,15 +1,27 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router";
 
 type SetupProps = {
     setTitle: (t: string) => void;
+    previousPlayers: string[];
 };
 
 export const Setup: React.FC<SetupProps> = ({ 
-    setTitle }) => {
+    setTitle,
+    previousPlayers,    
+ }) => {
+
+        console.log("Previous Players: ", previousPlayers);
+
+        useEffect(
+            () => {
+                setTitle("Set Up Your Game!")
+            }, []
+        )
 
     const nav = useNavigate();
 
-    setTitle("Set Up Your Game!");
+    // setTitle("Set Up Your Game!");
 
     //We'll write code here. . .
 

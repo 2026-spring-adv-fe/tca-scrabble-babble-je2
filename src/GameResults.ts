@@ -98,6 +98,23 @@ export const getLeaderboard = (
         )
     ;
 
+export const getPreviousPlayers = (
+        games: GameResult[]
+        ) => games 
+        .flatMap(
+            x => x.players
+        )
+        .filter(
+            (x, i, a) => i == a.findIndex(
+                y => y == x
+            )
+        )
+        .sort(
+            (a, b) => a.localeCompare(b)
+        )
+        ;
+
+
 //
 // Helper functions
 //
@@ -141,21 +158,6 @@ export const getLeaderboard = (
         };
     };
 
-    const getPreviousPlayers = (
-        games: GameResult[]
-    ) => games 
-        .flatMap(
-            x => x.players
-        )
-        .filter(
-            (x, i, a) => i == a.findIndex(
-                y => y == x
-            )
-        )
-        .sort(
-            (a, b) => a.localeCompare(b)
-        )
-    ;
 
     // console.log(
     //     getPreviousPlayers(
