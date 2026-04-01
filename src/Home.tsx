@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router";
 import type { GeneralFacts, LeaderboardEntry } from "./GameResults";
-import { useEffect } from "react";
+// import { useEffect } from "react";
 
 export const APP_TITLE = "Scrabble-Babble! A Scrabble Companion";
 type HomeProps = {
@@ -15,10 +15,10 @@ export const Home: React.FC<HomeProps> = ({
     setTitle,
 } ) => {
 
-    useEffect(
-        () => 0,
-        [],
-    );
+    // useEffect(
+    //     () => 0,
+    //     [],
+    // );
 
     setTitle(APP_TITLE);
     const nav = useNavigate();
