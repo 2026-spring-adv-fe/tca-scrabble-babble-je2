@@ -52,7 +52,9 @@ const App = () => {
   // const [gameResults, setGameResults] = useState<GameResult[]>([]);
   const [title, setTitle] = useState(APP_TITLE);
 
-  const [theme, setTheme] = useState("caramellatte");
+  const [theme, setTheme] = useState("emerald");
+
+  const [currentPlayers, setCurrentPlayers] = useState<string[]>([]);
 
   //
   // Calculated state and other functions
@@ -87,9 +89,9 @@ const App = () => {
             type="checkbox"
             onClick={
               () => setTheme(
-                theme === "caramellatte"
-                  ? "luxury"
-                  : "caramellatte"
+                theme === "emerald"
+                  ? "forest"
+                  : "emerald"
               )}
 
           />
@@ -141,9 +143,10 @@ const App = () => {
                   previousPlayers={
                     getPreviousPlayers(gameResults)
                   }
+                  setCurrentPlayers={setCurrentPlayers}
                 />
               }
-            />
+             />
             <Route 
               path='/play'
               element={
@@ -152,6 +155,7 @@ const App = () => {
                 addNewGameResult={
                   addNewGameResult
                 }
+                players={currentPlayers}
                 />
               }
             />

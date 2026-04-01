@@ -5,13 +5,16 @@ import { useState } from "react";
 type PlayProps = {
     addNewGameResult: (g: GameResult) => void;
     setTitle: (t: string) => void;
+    players?: string[];
 };
 
 export const Play: React.FC<PlayProps> = ({ 
     addNewGameResult,
     setTitle,
-    }) => {
+    players,
+}) => {
 
+    console.log("Players in Play Component: ", players);
     setTitle("Play Your Game!");
     
     const nav = useNavigate();
@@ -29,9 +32,9 @@ export const Play: React.FC<PlayProps> = ({
                         addNewGameResult({
                             winner: "Snape",
                             players: [
+                                "McGonagall",
+                                "Draco",
                                 "Snape",
-                                "Dumbledore",
-                                "Voldemort",
                             ],
                             start: startTimestamp,
                             end: new Date().toISOString(),
