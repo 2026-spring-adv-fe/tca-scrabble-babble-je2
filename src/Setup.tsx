@@ -55,8 +55,20 @@ export const Setup: React.FC<SetupProps> = ({
             >
                 Start the Game
             </button>
+                <div className="join mt-4"
+                >
+            <input 
+                className="input join-item" 
+                placeholder="New Player Name" 
+            />
+            <button 
+                className="btn join-item rounded-r-full"
+                >
+                Add New Player
+            </button>
+            </div>
             <div className="mt-4">
-                {availablePlayers.map((player) => (
+                {availablePlayers.map(player => (
                     <div key={player.name} className="form-control">
                         <label className="block mt-2">
                             {/* <span className="label-text">{player.name}</span> */}

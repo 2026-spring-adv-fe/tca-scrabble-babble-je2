@@ -31,11 +31,12 @@ export const Play: React.FC<PlayProps> = ({
                 onClick={
                     () => {
                         addNewGameResult({
-                            winner: "Snape",
+                            winner: "Carol",
                             players: [
-                                "McGonagall",
-                                "Draco",
-                                "Snape",
+                                "Sam",
+                                "Becky",
+                                "Oliver",
+                                "Carol"
                             ],
                             start: startTimestamp,
                             end: new Date().toISOString(),
