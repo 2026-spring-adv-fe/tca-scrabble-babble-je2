@@ -41,7 +41,7 @@ export const getGeneralFacts = (games: GameResult[]): GeneralFacts => {
         };
     }
 
-    const now = Date.now();
+    // const now = Date.now();
 
     const gamesDurationSinceLastPlayed = games.map(
         x => Date.now() - Date.parse(x.end)

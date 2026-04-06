@@ -53,4 +53,6 @@ export const Play: React.FC<PlayProps> = ({
             </button>
         </>
     );
+
+    console.log(players);
 };
