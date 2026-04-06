@@ -87,6 +87,8 @@ const App = () => {
 
   const [theme, setTheme] = useState("garden");
 
+
+//  Preserves last user-theme setting (light/dark), launches same on refresh.
   useEffect(
     () => {
     const loadTheme = async () => {
@@ -161,7 +163,7 @@ const App = () => {
 
           {/* moon icon */}
           <svg
-            className="swap-off h-10 w-10 fill-current"
+            className="swap-on h-10 w-10 fill-current"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
@@ -170,7 +172,7 @@ const App = () => {
 
           {/* sun icon */}
           <svg
-            className="swap-on h-10 w-10 fill-current"
+            className="swap-off h-10 w-10 fill-current"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24">
             <path
