@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import type { GameResult } from "./GameResults";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
 
 
 type PlayProps = {
@@ -15,8 +16,11 @@ export const Play: React.FC<PlayProps> = ({
     players,
 }) => {
 
-    console.log("Players in Play Component: ", players);
-    setTitle("Play Your Game!");
+        useEffect(
+            () => {
+                setTitle("Play your Game!")
+            }, [setTitle]
+        )
     
     const nav = useNavigate();
     const [startTimestamp] = useState(new Date().toISOString());

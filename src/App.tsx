@@ -15,6 +15,7 @@ import {
     type GameResult,
   } from './GameResults';
 import { useState } from 'react';
+import localforage from 'localforage';
 
 
 const dummyGameResults: GameResult[] = [
@@ -128,12 +129,18 @@ const App = () => {
           <input 
             type="checkbox"
             onClick={
-              () => setTheme(
-                theme === "emerald"
-                  ? "forest"
-                  : "emerald"
-              )}
+              async () => {
+                const result = await localforage.setItem<string>(
+                  'theme', 
+                  theme === "emerald"
+                    ? "forest"
+                    : "emerald"
+                );
 
+                  setTheme(
+                    result);
+              }
+          }
             // checked={true}
 
           />

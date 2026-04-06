@@ -28,7 +28,7 @@ export const Setup: React.FC<SetupProps> = ({
         useEffect(
             () => {
                 setTitle("Set Up Your Game!")
-            }, []
+            }, [setTitle]
         )
 
     const nav = useNavigate();
