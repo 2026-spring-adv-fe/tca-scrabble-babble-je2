@@ -15,7 +15,7 @@ export const Play: React.FC<PlayProps> = ({
     setTitle,
     players,
 }) => {
-
+        console.log(players);
         useEffect(
             () => {
                 setTitle("Play your Game!")
@@ -54,5 +54,5 @@ export const Play: React.FC<PlayProps> = ({
         </>
     );
 
-    console.log(players);
+    
 };

@@ -78,7 +78,9 @@ export const Home: React.FC<HomeProps> = ({
                             {
                                 leaderboard.map(
                                     x => (
-                                        <tr>
+                                        <tr
+                                            key={x.name}
+                                        >
                                             <td>
                                                 { x.wins }                        
                                             </td>
