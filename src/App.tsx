@@ -14,7 +14,7 @@ import {
     getPreviousPlayers,
     type GameResult,
   } from './GameResults';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import localforage from 'localforage';
 
 const dummyGameResults: GameResult[] = [
@@ -86,6 +86,24 @@ const App = () => {
   const [title, setTitle] = useState(APP_TITLE);
 
   const [theme, setTheme] = useState("garden");
+
+  useEffect(
+    () => {
+    const loadTheme = async () => {
+      const result = await localforage.getItem<string>("theme") ?? "garden";
+
+      if (!ignore)
+        setTheme(result);
+    }
+
+    let ignore = false;
+    loadTheme();
+    return () => {
+      ignore = true;
+    }
+  }, 
+  [],
+);
 
   // this allows us to store the array of two items that comes back from the function
   // rather than destructuring into the two consts (this happens further down the code)
