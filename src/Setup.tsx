@@ -19,7 +19,6 @@ export const Setup: React.FC<SetupProps> = ({
                     name: p,
                     selected: false,
                 })
-
             )
         )
 

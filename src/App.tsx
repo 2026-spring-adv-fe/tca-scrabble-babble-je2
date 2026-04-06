@@ -17,7 +17,6 @@ import {
 import { useState } from 'react';
 import localforage from 'localforage';
 
-
 const dummyGameResults: GameResult[] = [
     {
         winner: "Bobby",
@@ -73,9 +72,7 @@ const dummyGameResults: GameResult[] = [
 
       start: "2026-04-04T02:23:32.795Z",
       end: "2026-04-04T03:13:52.795Z"
-    },   
-
-    
+    },       
 ];
 
 const App = () => {
@@ -88,7 +85,7 @@ const App = () => {
   // const [gameResults, setGameResults] = useState<GameResult[]>([]);
   const [title, setTitle] = useState(APP_TITLE);
 
-  const [theme, setTheme] = useState("emerald");
+  const [theme, setTheme] = useState("garden");
 
   // this allows us to store the array of two items that comes back from the function
   // rather than destructuring into the two consts (this happens further down the code)
@@ -132,17 +129,16 @@ const App = () => {
               async () => {
                 const result = await localforage.setItem<string>(
                   'theme', 
-                  theme === "emerald"
-                    ? "forest"
-                    : "emerald"
+                  theme === "garden"
+                    ? "dracula"
+                    : "garden",
                 );
-
                   setTheme(
-                    result);
+                    result
+                  );
               }
           }
             // checked={true}
-
           />
 
           {/* moon icon */}

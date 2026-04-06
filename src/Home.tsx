@@ -20,11 +20,8 @@ export const Home: React.FC<HomeProps> = ({
         () => setTitle(APP_TITLE), 
         [setTitle],
     );
-
    
     const nav = useNavigate();
-
-
 
     //We'll write code here. . .
 
