@@ -15,8 +15,8 @@ export const Setup: React.FC<SetupProps> = ({
 
         const [availablePlayers, setAvailablePlayers] = useState(
             previousPlayers.map(
-                p => ({
-                    name: p,
+                x => ({
+                    name: x,
                     selected: false,
                 })
             )
@@ -45,8 +45,8 @@ export const Setup: React.FC<SetupProps> = ({
                     () => {
                         setCurrentPlayers(
                             availablePlayers
-                                .filter(p => p.selected)
-                                .map(p => p.name)
+                                .filter(x => x.selected)
+                                .map(x => x.name)
                         );
                         nav("/play");
                     }               
@@ -77,10 +77,10 @@ export const Setup: React.FC<SetupProps> = ({
                                 checked={player.selected}
                                 onChange={() => {
                                     setAvailablePlayers(
-                                        availablePlayers.map((p) =>
-                                            p.name === player.name
-                                                ? { ...p, selected: !p.selected }
-                                                : p
+                                        availablePlayers.map((x) =>
+                                            x.name === player.name
+                                                ? { ...x, selected: !x.selected }
+                                                : x
                                         )
                                     );
                                 }}

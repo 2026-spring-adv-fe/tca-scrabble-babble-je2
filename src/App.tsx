@@ -87,6 +87,8 @@ const App = () => {
 
   const [theme, setTheme] = useState("garden");
 
+  const [currentPlayers, setCurrentPlayers] = useState<string[]>([]);
+
 
 //  Preserves last user-theme setting (light/dark), launches same on refresh.
   useEffect(

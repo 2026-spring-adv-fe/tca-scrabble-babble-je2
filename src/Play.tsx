@@ -30,27 +30,30 @@ export const Play: React.FC<PlayProps> = ({
     //then return some jsx...
     return (
         <>
-            <button 
-                className="btn btn-outline btn-secondary btn-lg w-full lg:w-64"
-                onClick={
-                    () => {
-                        addNewGameResult({
-                            winner: "Carol",
-                            players: [
-                                "Sam",
-                                "Becky",
-                                "Oliver",
-                                "Carol"
-                            ],
-                            start: startTimestamp,
-                            end: new Date().toISOString(),
-                        });
-                        nav(-2);
+            {
+                players?.map(
+                    x => (            
+                        <button 
+                            className="btn btn-outline btn-secondary btn-lg w-full lg:w-64 mb-2"
+                            onClick={
+                                () => {
+                                    addNewGameResult({
+                                        winner: x,
+                                        players: players,
+                                        start: startTimestamp,
+                                        end: new Date().toISOString(),
+                                    });
+                                    nav(-2);
+                        }
                     }
-                }
             >
-                Game Over
-            </button>
+                        {
+                            `${x} Won!`
+                        }
+                        </button>
+                    )
+                )
+            }
         </>
     );
 
