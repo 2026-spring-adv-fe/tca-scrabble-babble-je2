@@ -37,13 +37,27 @@ export const Setup: React.FC<SetupProps> = ({
             }, [setTitle]
         )
 
+    // DUPE STATE
+    // const [dupePlayerName, setDupePlayerName] = useState(false);
+
     const nav = useNavigate();
 
     const [newPlayerName, setNewPlayerName] = useState("");
 
+
     // 
     // Derived state or other code
     // 
+
+    const dupePlayerName = availablePlayers.some(
+        x => x.name === newPlayerName
+    );
+
+    const selectedCount = availablePlayers.filter(
+        x => x.selected
+    ).length;
+
+    const twoToFourPlayersChosen = selectedCount >= 2 && selectedCount <= 4;
 
     // setTitle("Set Up Your Game!");
 
@@ -62,15 +76,27 @@ export const Setup: React.FC<SetupProps> = ({
                                 .map(x => x.name)
                         );
                         nav("/play");
-                    }               
+                    } 
+                }  
+                disabled={
+                    !twoToFourPlayersChosen
+                }            
+            >    
+            {/* START GAME BUTTON IS DISABLED UNTIL 2 PLAYERS AND AFTER 4 PLAYERS ARE CHOSEN */}
+                {
+                    !twoToFourPlayersChosen
+                        ? 'Choose 2 to 4 Players'
+                        : 'Start Game'
                 }
-            >
-                Start the Game
+
+            {/* DAISYUI COMP JOIN - INPUT + BUTTON */}
             </button>
                 <div className="join mt-4 w-full"
                 >
+            {/* ADD NEW PLAYER - INPUT */}
             <input 
-                className="input join-item" 
+                type = "text"
+                className={`input join-item ${dupePlayerName ? 'input-error' : ''}`} 
                 placeholder="New Player Name" 
                 value={newPlayerName}
                 onChange={
@@ -79,18 +105,31 @@ export const Setup: React.FC<SetupProps> = ({
                     )
                 }
             />
+            {/* ADD NEW PLAYER NAME - ENTER */}
             <button 
                 className="btn join-item rounded-r-full"
                 onClick={
-                    () => setAvailablePlayers(
-                        [
-                            ...availablePlayers,
-                            {
-                                name: newPlayerName,
-                                selected: true,
-                            },
-                        ]
-                    )
+                    () => {
+                        setAvailablePlayers(
+                            [
+                                ...availablePlayers,
+                                {
+                                    name: newPlayerName,
+                                    selected: true,
+                                },
+                            ].sort(
+                                (a, b) => a.name.localeCompare(b.name)
+                            )
+                        );
+
+                        setNewPlayerName(
+                            ""
+                        );
+                    }
+                }
+                // PREVENTS INPUT OF BLANK NAME - REQUIRES INPUT TO ENABLE BUTTON
+                disabled={
+                    newPlayerName.length === 0 || dupePlayerName
                 }
                 >
                 Add New Player
