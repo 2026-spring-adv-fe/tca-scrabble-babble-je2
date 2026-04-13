@@ -54,7 +54,7 @@ export const Setup: React.FC<SetupProps> = ({
             >
                 Start the Game
             </button>
-                <div className="join mt-4"
+                <div className="join mt-4 w-full"
                 >
             <input 
                 className="input join-item" 
