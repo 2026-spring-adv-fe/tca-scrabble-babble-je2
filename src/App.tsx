@@ -87,7 +87,7 @@ const App = () => {
 
   const [theme, setTheme] = useState("garden");
 
-  const [currentPlayers, setCurrentPlayers] = useState<string[]>([]);
+  const currentPlayersStateTuple = useState<string[]>([]);
 
 
 //  Preserves last user-theme setting (light/dark), launches same on refresh.
@@ -113,7 +113,7 @@ const App = () => {
   // rather than destructuring into the two consts (this happens further down the code)
   // in destructuring the tuple, we refer by index [] whether first or second item in the array
 
-  const currentPlayersStateTuple = useState<string[]>([]);
+
 
   //
   // Calculated state and other functions
