@@ -13,6 +13,13 @@ export const Setup: React.FC<SetupProps> = ({
     setCurrentPlayers,
  }) => {
 
+    // 
+    // React Hooks
+    // . local state
+    // . effects
+    // . navigation
+    // 
+
         const [availablePlayers, setAvailablePlayers] = useState(
             previousPlayers.map(
                 x => ({
@@ -31,6 +38,12 @@ export const Setup: React.FC<SetupProps> = ({
         )
 
     const nav = useNavigate();
+
+    const [newPlayerName, setNewPlayerName] = useState("");
+
+    // 
+    // Derived state or other code
+    // 
 
     // setTitle("Set Up Your Game!");
 
@@ -59,9 +72,26 @@ export const Setup: React.FC<SetupProps> = ({
             <input 
                 className="input join-item" 
                 placeholder="New Player Name" 
+                value={newPlayerName}
+                onChange={
+                    (e) => setNewPlayerName(
+                        e.target.value
+                    )
+                }
             />
             <button 
                 className="btn join-item rounded-r-full"
+                onClick={
+                    () => setAvailablePlayers(
+                        [
+                            ...availablePlayers,
+                            {
+                                name: newPlayerName,
+                                selected: true,
+                            },
+                        ]
+                    )
+                }
                 >
                 Add New Player
             </button>
