@@ -2,6 +2,24 @@ import { durationFormatter } from 'human-readable';
 
 //
 // Exported type definitions...
+
+// "Last Play" === game ends out of tiles; all player moves post LP are "out" by default
+// type GameAction = "turn" | "AFG" | "Last Play"
+
+// type GameEvent = {
+//     action: GameAction;
+//     player: string;
+//     turnNumber?: number;
+//     roundNumber?: number;
+
+// };
+
+
+// type turnType = "play" | "swap tiles" | "pass";
+
+// // consider initals/icons for the UI
+// type premiumSpace = "Double Letter" | "Double Word" | "Triple Letter" | "Triple Word";
+
 //
 export type GameResult = {
     winner: string;
