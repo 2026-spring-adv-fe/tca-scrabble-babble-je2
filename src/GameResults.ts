@@ -150,7 +150,9 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): {
             x => ({
                 numberOfPlayers: x[0],
                 numberOfGames: x[1].length,
-                avgGameDuration: getAvgGameDurationInMilliseconds(x[1]).toFixed(2),
+                avgGameDuration: formatGameDuration(
+                    getAvgGameDurationInMilliseconds(x[1])
+                ),
             })
         )
         .sort(
