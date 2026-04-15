@@ -58,6 +58,7 @@ export const Setup: React.FC<SetupProps> = ({
     ).length;
 
     const twoToFourPlayersChosen = selectedCount >= 2 && selectedCount <= 4;
+    // const onePlayerChosen = selectedCount === 1;
 
     // setTitle("Set Up Your Game!");
 
@@ -88,6 +89,29 @@ export const Setup: React.FC<SetupProps> = ({
                         ? 'Choose 2 to 4 Players'
                         : 'Start Game'
                 }
+
+             {/* <button 
+                className="btn btn-outline btn-secondary btn-lg w-full lg:w-64 mt-4"
+                onClick={
+                    () => {
+                        setCurrentPlayers(
+                            availablePlayers
+                                .filter(x => x.selected)
+                                .map(x => x.name)
+                        );
+                        nav("/play");
+                    } 
+                }  
+                disabled={
+                    !onePlayerChosen
+                }            
+            >    
+                {
+                    !onePlayerChosen
+                        ? 'Choose 1 Player'
+                        : 'Start Solitaire Game'
+                }
+            </button>    */}
 
             {/* DAISYUI COMP JOIN - INPUT + BUTTON */}
             </button>
