@@ -10,6 +10,7 @@ import { Setup } from './Setup';
 import { Play } from './Play';
 import { 
     getGeneralFacts,
+    getAvgGameDurationsByPlayerCount,
     getLeaderboard,
     getPreviousPlayers,
     type GameResult,
@@ -200,6 +201,9 @@ const App = () => {
                   setTitle={setTitle}
                   generalFacts={
                     getGeneralFacts(gameResults)
+                  }
+                  avgGameDurations={
+                    getAvgGameDurationsByPlayerCount(gameResults)
                   }
                   leaderboard={
                     getLeaderboard(gameResults)

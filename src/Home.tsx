@@ -1,21 +1,25 @@
 import { useNavigate } from "react-router";
-import type { GeneralFacts, LeaderboardEntry } from "./GameResults";
+import type { GeneralFacts, LeaderboardEntry, AvgGameDuration } from "./GameResults";
 import { useEffect } from "react";
 
 export const APP_TITLE = "Scrabble-Babble! A Scrabble Companion";
 
 type HomeProps = {
-    generalFacts: GeneralFacts
+    generalFacts: GeneralFacts,
+    avgGameDurations: AvgGameDuration[],
     leaderboard: LeaderboardEntry[],
     setTitle: (t: string) => void,
 };
 
 export const Home: React.FC<HomeProps> = ({
     generalFacts,
+    avgGameDurations : foo,
     leaderboard,
     setTitle,
 }) => {
 
+    console.log(foo);
+    
     useEffect(
         () => setTitle(APP_TITLE), 
         [setTitle],

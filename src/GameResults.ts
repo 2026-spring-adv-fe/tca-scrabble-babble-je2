@@ -25,6 +25,12 @@ export type GeneralFacts = {
     longestGame: string;
 };
 
+export type AvgGameDuration = {
+    numberOfPlayers: number;
+    numberOfGames: number;
+    avgGameDuration: string;
+};
+
 
 
 //
@@ -115,11 +121,7 @@ export const getPreviousPlayers = (
         ;
 
 
-export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): {
-    numberOfPlayers: number;
-    numberOfGames: number;
-    avgGameDuration: string;
-}[] => {
+export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGameDuration[] => {
 
     const grouped = Map.groupBy(
         results,
