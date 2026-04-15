@@ -13,13 +13,11 @@ type HomeProps = {
 
 export const Home: React.FC<HomeProps> = ({
     generalFacts,
-    avgGameDurations : foo,
+    avgGameDurations,
     leaderboard,
     setTitle,
 }) => {
 
-    console.log(foo);
-    
     useEffect(
         () => setTitle(APP_TITLE), 
         [setTitle],
@@ -106,6 +104,42 @@ export const Home: React.FC<HomeProps> = ({
                     </table>
                 </div>
             </div>
+            <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
+                <div className="card-body p-2">
+                    <h2 className="card-title">AVG Game Durations</h2>
+                    <table className="table table-zebra">
+                        <thead>
+                            <tr>
+                                <th># PLAYERS</th>
+                                <th># GAMES</th>
+                                <th>AVG DURATION</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                avgGameDurations.map(
+                                    x => (
+                                        <tr
+                                            key={x.numberOfPlayers}
+                                        >
+                                            <td>
+                                                { x.numberOfPlayers }                        
+                                            </td>
+                                            <td>
+                                                { x.numberOfGames }                        
+                                            </td>
+                                            <td>
+                                                { x.avgGameDuration }                        
+                                            </td>
+                                        </tr>
+                                    )
+                                )
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
         </>
     )
 }
