@@ -8,7 +8,7 @@ type PlayProps = {
     players?: string[];
 };
 
-type MoveType = "Play" | "Swap" | "Pass";
+type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
 type MoveRecord = {
     moveNumber: number;
@@ -39,6 +39,8 @@ export const Play: React.FC<PlayProps> = ({
     const [tileAdjustments, setTileAdjustments] = useState<Record<string, number>>(
         Object.fromEntries((players ?? []).map((player) => [player, 0]))
     );
+    const [completedGame, setCompletedGame] = useState<GameResult | null>(null);
+    const isGameFinished = completedGame !== null;
 
     useEffect(
         () => {
@@ -91,7 +93,7 @@ export const Play: React.FC<PlayProps> = ({
         [moves, players, tileAdjustments],
     );
 
-    const canAddMove = Boolean(players && players.length > 0 && (currentMoveType !== "Play" || wordScore.length > 0));
+    const canAddMove = Boolean(players && players.length > 0 && !isGameFinished && (currentMoveType !== "Play" || wordScore.length > 0));
 
     const addMove = () => {
         if (!players || players.length === 0) {
@@ -129,6 +131,17 @@ export const Play: React.FC<PlayProps> = ({
         }));
     };
 
+    const rematch = () => {
+        setMoves([]);
+        setCurrentMoveType("Play");
+        setWordScore("0");
+        setActivePlayerIndex(0);
+        setTileAdjustments(
+            Object.fromEntries((players ?? []).map((player) => [player, 0]))
+        );
+        setCompletedGame(null);
+    };
+
     const finishGame = () => {
         if (!players || players.length === 0) {
             return;
@@ -155,16 +168,17 @@ export const Play: React.FC<PlayProps> = ({
             playerScores[0],
         )?.player ?? "";
 
-        addNewGameResult({
+        const finishedResult: GameResult = {
             winner,
             players,
             start: startTimestamp,
             end: new Date().toISOString(),
             moves,
             playerScores,
-        });
+        };
 
-        nav(-2);
+        addNewGameResult(finishedResult);
+        setCompletedGame(finishedResult);
     };
 
     if (!players || players.length === 0) {
@@ -187,17 +201,67 @@ export const Play: React.FC<PlayProps> = ({
 
     return (
         <>
+            {isGameFinished && completedGame && (
+                <div className="card bg-neutral text-neutral-content shadow-lg p-4 mb-4">
+                    <div className="grid gap-4 lg:grid-cols-[auto_1fr] items-center">
+                        <div className="avatar placeholder self-start">
+                            <div className="bg-white text-success-content rounded-full w-24 h-24 flex items-center justify-center text-4xl font-bold">
+                                {completedGame.winner.charAt(0).toUpperCase()}
+                            </div>
+                        </div>
+                        <div>
+                            <h2 className="text-3xl font-bold">Behold, the After-Scrabble Babble!</h2>
+                            <p className="text-lg mt-2">Winner: <strong>{completedGame.winner}</strong></p>
+                            <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-black">
+                                <div className="rounded-lg bg-white/90 p-3">
+                                    <div className="text-sm uppercase">Word-Score Total</div>
+                                    <div className="text-2xl font-semibold">
+                                        {completedGame.playerScores.find((score) => score.player === completedGame.winner)?.wordScoreTotal ?? 0}
+                                    </div>
+                                </div>
+                                <div className="rounded-lg bg-white/90 p-3">
+                                    <div className="text-sm uppercase">Tile Adjustment</div>
+                                    <div className="text-2xl font-semibold">
+                                        {completedGame.playerScores.find((score) => score.player === completedGame.winner)?.tileAdjustment ?? 0}
+                                    </div>
+                                </div>
+                                <div className="rounded-lg bg-white/90 p-3">
+                                    <div className="text-sm uppercase">Final Game Score</div>
+                                    <div className="text-2xl font-semibold">
+                                        {completedGame.playerScores.find((score) => score.player === completedGame.winner)?.gameScore ?? 0}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                        <button
+                            className="btn btn-outline btn-primary"
+                            onClick={rematch}
+                        >
+                            Rematch
+                        </button>
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => nav(-2)}
+                        >
+                            Return Home
+                        </button>
+                    </div>
+                </div>
+            )}
             <div className="grid gap-4 lg:grid-cols-2">
                 <div className="card bg-base-100 shadow-lg p-4">
                     <h2 className="card-title">Current Move</h2>
                     <p className="mb-2">Round {roundNumber} — {activePlayer}&apos;s turn</p>
 
                     <div className="btn-group mb-4">
-                        {(["Play", "Swap", "Pass"] as MoveType[]).map((type) => (
+                        {(["Play", "Swap", "Pass", "Out"] as MoveType[]).map((type) => (
                             <button
                                 key={type}
                                 className={`btn ${currentMoveType === type ? "btn-primary" : "btn-outline"}`}
                                 onClick={() => setCurrentMoveType(type)}
+                                disabled={isGameFinished}
                             >
                                 {type}
                             </button>
@@ -213,7 +277,7 @@ export const Play: React.FC<PlayProps> = ({
                             className="input input-bordered"
                             min="0"
                             value={normalizedWordScore}
-                            disabled={currentMoveType !== "Play"}
+                            disabled={currentMoveType !== "Play" || isGameFinished}
                             onChange={(e) => setWordScore(e.target.value)}
                         />
                     </div>
