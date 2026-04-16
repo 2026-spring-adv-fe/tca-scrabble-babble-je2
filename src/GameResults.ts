@@ -2,37 +2,44 @@ import { durationFormatter } from 'human-readable';
 
 //
 // Exported type definitions...
-
-// "Last Play" === game ends out of tiles; all player moves post LP are "out" by default
-// type GameAction = "turn" | "AFG" | "Last Play"
-
-// type GameEvent = {
-//     action: GameAction;
-//     player: string;
-//     turnNumber?: number;
-//     roundNumber?: number;
-
-// };
-
-
-// type turnType = "play" | "swap tiles" | "pass";
-
-// // consider initals/icons for the UI
-// type premiumSpace = "Double Letter" | "Double Word" | "Triple Letter" | "Triple Word";
-
 //
+
+
+
+export type MoveType = "Play" | "Swap" | "Pass";
+
+export type MoveRecord = {
+    moveNumber: number;
+    roundNumber: number;
+    player: string;
+    moveType: MoveType;
+    wordScore: number;
+    scoreDelta: number;
+};
+
+export type PlayerGameScore = {
+    player: string;
+    wordScoreTotal: number;
+    tileAdjustment: number;
+    gameScore: number;
+};
+
 export type GameResult = {
     winner: string;
     players: string[];
-
     start: string;
     end: string;
+    moves: MoveRecord[];
+    playerScores: PlayerGameScore[];
 };
 
  export type LeaderboardEntry = {
     wins: number;
     losses: number;
     avg: string;
+    totalWordScore: number;
+    totalGameScore: number;
+    avgGameScore: string;
     name: string;
 };
 
@@ -43,11 +50,26 @@ export type GeneralFacts = {
     longestGame: string;
 };
 
+export type AvgGameDuration = {
+    numberOfPlayers: number;
+    numberOfGames: number;
+    avgGameDuration: string;
+};
 
+export type ScoreInsights = {
+    totalPlayerEntries: number;
+    totalWordScore: number;
+    totalGameScore: number;
+    avgWordScorePerPlayerGame: string;
+    avgGameScorePerPlayerGame: string;
+    topWordScoreTotal: number;
+    topGameScore: number;
+};
 
 //
 // Exported functions..
 //
+
 export const getGeneralFacts = (games: GameResult[]): GeneralFacts => {
 
     if (games.length === 0) {
@@ -108,10 +130,8 @@ export const getLeaderboard = (
             })
         )
         .sort(
-            (a, b) => a.avg == b.avg
-                ? a.wins == 0 && b.wins == 0
-                    ? (a.wins + a.losses) - (b.wins + b.losses)
-                    : (b.wins + b.losses) - (a.wins + a.losses)
+            (a, b) => Number.parseFloat(b.avg) === Number.parseFloat(a.avg)
+                ? Number.parseFloat(b.avgGameScore) - Number.parseFloat(a.avgGameScore)
                 : Number.parseFloat(b.avg) - Number.parseFloat(a.avg)
         )
     ;
@@ -132,6 +152,77 @@ export const getPreviousPlayers = (
         )
         ;
 
+
+export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
+    const playerScores = games.flatMap((game) => game.playerScores);
+
+    const totalPlayerEntries = playerScores.length;
+    const totalWordScore = playerScores.reduce(
+        (acc, score) => acc + score.wordScoreTotal,
+        0,
+    );
+    const totalGameScore = playerScores.reduce(
+        (acc, score) => acc + score.gameScore,
+        0,
+    );
+
+    const avgWordScorePerPlayerGame = totalPlayerEntries > 0
+        ? totalWordScore / totalPlayerEntries
+        : 0;
+
+    const avgGameScorePerPlayerGame = totalPlayerEntries > 0
+        ? totalGameScore / totalPlayerEntries
+        : 0;
+
+    const topWordScoreTotal = totalPlayerEntries > 0
+        ? Math.max(...playerScores.map((score) => score.wordScoreTotal))
+        : 0;
+
+    const topGameScore = totalPlayerEntries > 0
+        ? Math.max(...playerScores.map((score) => score.gameScore))
+        : 0;
+
+    return {
+        totalPlayerEntries,
+        totalWordScore,
+        totalGameScore,
+        avgWordScorePerPlayerGame: `${avgWordScorePerPlayerGame.toFixed(1)}`,
+        avgGameScorePerPlayerGame: `${avgGameScorePerPlayerGame.toFixed(1)}`,
+        topWordScoreTotal,
+        topGameScore,
+    };
+};
+
+export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGameDuration[] => {
+
+    const grouped = Map.groupBy(
+        results,
+        (x) => x.players.length,
+    );
+
+    // console.log(
+    //     [
+    //         ...grouped
+    //     ]
+    // );
+
+    return [
+        ...grouped
+    ]
+        .map(
+            x => ({
+                numberOfPlayers: x[0],
+                numberOfGames: x[1].length,
+                avgGameDuration: formatGameDuration(
+                    getAvgGameDurationInMilliseconds(x[1])
+                ),
+            })
+        )
+        .sort(
+            (a, b) => a.numberOfPlayers - b.numberOfPlayers
+        )
+    ;
+};
 
 //
 // Helper functions
@@ -162,6 +253,26 @@ export const getPreviousPlayers = (
             )
         ).length;
 
+        const playerScores = games
+            .flatMap(x => x.playerScores)
+            .filter(x => x.player == player)
+        ;
+
+        const totalWordScore = playerScores.reduce(
+            (acc, x) => acc + x.wordScoreTotal,
+            0,
+        );
+
+        const totalGameScore = playerScores.reduce(
+            (acc, x) => acc + x.gameScore,
+            0,
+        );
+
+        const avgGameScore = totalGames > 0
+            ? totalGameScore / totalGames
+            : 0
+        ;
+
         const avg = totalGames > 0
             ? countOfWins / totalGames
             : 0
@@ -171,17 +282,29 @@ export const getPreviousPlayers = (
             wins: countOfWins,
             losses: totalGames - countOfWins,
             avg: `${avg.toFixed(3)}`,
+            totalWordScore,
+            totalGameScore,
+            avgGameScore: `${avgGameScore.toFixed(1)}`,
             name: player
 
         };
     };
 
+    const getGameDurationInMilliseconds = (result: GameResult) => Date.parse(result.end) 
+        - Date.parse(result.start)
+    ;
 
-    // console.log(
-    //     getPreviousPlayers(
-    //         dummyGameResults
-    //     ),
-    //     getLeaderboard(
-    //         dummyGameResults
-    //     ),
-    // );
+    const getAvgGameDurationInMilliseconds = (results: GameResult[]) => {
+
+    // Add up the game durations for a total, simple reduce.
+    const sum = results.reduce(
+        (acc, x) => acc + getGameDurationInMilliseconds(x),
+        0,
+    );
+
+    // Avg is total divided by number of games, accounting for divide by zero...
+    return results.length > 0
+        ? sum / results.length
+        : 0
+    ;
+};    
