@@ -123,13 +123,13 @@ export const Home: React.FC<HomeProps> = ({
                                         <tr
                                             key={x.name}
                                         >
+                                            <td>{x.name}</td>
                                             <td>{x.wins}</td>
                                             <td>{x.losses}</td>
                                             <td>{x.avg}</td>
                                             <td>{x.avgWordScore}</td>
                                             <td>{x.avgGameScore}</td>
                                             <td>{x.totalGameScore}</td>
-                                            <td>{x.name}</td>
                                         </tr>
                                     )
                                 )
