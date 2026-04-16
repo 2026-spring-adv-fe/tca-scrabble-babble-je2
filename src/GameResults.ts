@@ -38,6 +38,7 @@ export type GameResult = {
     losses: number;
     avg: string;
     totalWordScore: number;
+    avgWordScore: string;
     totalGameScore: number;
     avgGameScore: string;
     name: string;
@@ -273,6 +274,11 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             : 0
         ;
 
+        const avgWordScore = totalGames > 0
+            ? totalWordScore / totalGames
+            : 0
+        ;
+
         const avg = totalGames > 0
             ? countOfWins / totalGames
             : 0
@@ -283,6 +289,7 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             losses: totalGames - countOfWins,
             avg: `${avg.toFixed(3)}`,
             totalWordScore,
+            avgWordScore: `${avgWordScore.toFixed(1)}`,
             totalGameScore,
             avgGameScore: `${avgGameScore.toFixed(1)}`,
             name: player
