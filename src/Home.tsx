@@ -107,13 +107,13 @@ export const Home: React.FC<HomeProps> = ({
                     <table className="table table-zebra">
                         <thead>
                             <tr>
-                                <th>PLAYER</th>
-                                <th>Wins</th>
-                                <th>Losses</th>
+                                <th>Player</th>
+                                <th>W</th>
+                                <th>L</th>
                                 <th>Win %</th>
-                                <th>Avg Word Score</th>
-                                <th>Avg Game Score</th>
-                                <th>Total Score</th>
+                                <th>Avg Pts/Word</th>
+                                <th>Avg Pts/Game</th>
+                                <th>All-Games Score</th>
                             </tr>
                         </thead>
                         <tbody>
