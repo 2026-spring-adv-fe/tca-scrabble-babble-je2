@@ -12,68 +12,11 @@ import {
     getGeneralFacts,
     getLeaderboard,
     getPreviousPlayers,
+    getScoreInsights,
     type GameResult,
   } from './GameResults';
 import { useState, useEffect } from 'react';
 import localforage from 'localforage';
-
-const dummyGameResults: GameResult[] = [
-    {
-        winner: "Bobby",
-        players: [
-            "Alice",
-            "Bobby",
-            "Carol",
-        ],
-
-        start: "2026-01-16T01:33:35.465Z",
-        end: "2026-01-16T02:21:35.465Z"
-    },
-    {
-        winner: "Jan",
-        players: [
-            "Alice",
-            "Greg",
-            "Jan",
-        ],
-
-        start: "2026-01-16T03:13:35.465Z",
-        end: "2026-01-16T03:49:35.465Z"
-    }, 
-    {
-        winner: "Greg",
-        players: [
-            "Marcia",
-            "Peter",
-            "Alice",
-            "Greg",
-        ],
-
-        start: "2026-02-26T03:10:40.465Z",
-        end: "2026-02-26T03:55:55.465Z"
-    },
-    {
-        winner: "Bobby",
-        players: [
-            "Bobby",
-            "Carol",
-            "Peter",
-        ],
-
-        start: "2026-04-02T04:08:32.795Z",
-        end: "2026-04-02T04:09:52.795Z"
-    }, 
-    {
-      winner: "Marcia",
-      players: [
-          "Carol",
-          "Marcia",
-      ],
-
-      start: "2026-04-04T02:23:32.795Z",
-      end: "2026-04-04T03:13:52.795Z"
-    },       
-];
 
 const App = () => {
 
@@ -81,8 +24,7 @@ const App = () => {
   // React Hooks...
   //
 
-  const [gameResults, setGameResults] = useState(dummyGameResults);
-  // const [gameResults, setGameResults] = useState<GameResult[]>([]);
+  const [gameResults, setGameResults] = useState<GameResult[]>([]);
   const [title, setTitle] = useState(APP_TITLE);
 
   const [theme, setTheme] = useState("garden");
@@ -203,6 +145,9 @@ const App = () => {
                   }
                   leaderboard={
                     getLeaderboard(gameResults)
+                  }
+                  scoreInsights={
+                    getScoreInsights(gameResults)
                   }
                 />
               }
