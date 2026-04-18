@@ -41,7 +41,7 @@ export const Home: React.FC<HomeProps> = ({
 
             <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
                 <div className="card-body p-2">
-                    <h2 className="card-title">General Facts</h2>
+                    <h2 className="card-title">All-Games: General Facts and Scoring Insights</h2>
                     <table className="table table-zebra">
                         <tbody>
                             <tr>
@@ -60,37 +60,20 @@ export const Home: React.FC<HomeProps> = ({
                                 <td>Longest Game</td>
                                 <th>{generalFacts.longestGame}</th>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
-                <div className="card-body p-2">
-                    <h2 className="card-title">Score Insights</h2>
-                    <table className="table table-zebra">
-                        <tbody>
                             <tr>
                                 <td>Total Player Entries</td>
                                 <th>{scoreInsights.totalPlayerEntries}</th>
                             </tr>
                             <tr>
-                                <td>Total Word Score</td>
-                                <th>{scoreInsights.totalWordScore}</th>
-                            </tr>
-                            <tr>
-                                <td>Total Game Score</td>
-                                <th>{scoreInsights.totalGameScore}</th>
-                            </tr>
-                            <tr>
-                                <td>Avg Word Score / Player-Game</td>
+                                <td>Avg Word Score</td>
                                 <th>{scoreInsights.avgWordScorePerPlayerGame}</th>
                             </tr>
                             <tr>
-                                <td>Avg Game Score / Player-Game</td>
+                                <td>Avg Game Score</td>
                                 <th>{scoreInsights.avgGameScorePerPlayerGame}</th>
                             </tr>
                             <tr>
-                                <td>Top Word Score Total</td>
+                                <td>Top Word-Score Total</td>
                                 <th>{scoreInsights.topWordScoreTotal}</th>
                             </tr>
                             <tr>
@@ -101,19 +84,23 @@ export const Home: React.FC<HomeProps> = ({
                     </table>
                 </div>
             </div>
-            <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
+            <div className="card bg-base-100 w-full shadow-lg my-2 overflow-x-scroll">
                 <div className="card-body p-2">
                     <h2 className="card-title">Wins-Losses Leaderboard</h2>
-                    <table className="table table-zebra">
+                    <table className="table table-zeb">
                         <thead>
                             <tr>
                                 <th>Player</th>
                                 <th>W</th>
                                 <th>L</th>
-                                <th>Win %</th>
-                                <th>Avg Pts/Word</th>
-                                <th>Avg Pts/Game</th>
-                                <th>All-Games Score</th>
+                                <th>W %</th>
+                                <th>Avg Word</th>
+                                <th>Avg Game</th>
+                                <th>Cumulative</th>
+                                <th>DL</th>
+                                <th>TL</th>
+                                <th>DW</th>
+                                <th>TW</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -130,6 +117,10 @@ export const Home: React.FC<HomeProps> = ({
                                             <td>{x.avgWordScore}</td>
                                             <td>{x.avgGameScore}</td>
                                             <td>{x.totalGameScore}</td>
+                                            <td>{x.doubleLetterCount}</td>
+                                            <td>{x.tripleLetterCount}</td>
+                                            <td>{x.doubleWordCount}</td>
+                                            <td>{x.tripleWordCount}</td>
                                         </tr>
                                     )
                                 )

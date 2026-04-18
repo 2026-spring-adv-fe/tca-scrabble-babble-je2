@@ -10,7 +10,7 @@ type PlayProps = {
 
 type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
-type TileMultiplier = "DL" | "TL" | "DW" | "TW";
+type TileMultiplier = "Double-Letter" | "Triple-Letter" | "Double-Word" | "Triple-Word";
 
 type MoveRecord = {
     moveNumber: number;
@@ -296,8 +296,8 @@ export const Play: React.FC<PlayProps> = ({
                             <span className="label-text">Tile Multipliers</span>
                         </label>
                         <div className="flex gap-4">
-                            {(["DL", "TL", "DW", "TW"] as TileMultiplier[]).map((mult) => (
-                                <label key={mult} className="flex items-center gap-1">
+                            {(["DL🩵", "TL💎", "DW🩷", "TW💌"] as TileMultiplier[]).map((mult) => (
+                                <label key={mult} className="flex items-center gap-2">
                                     <input
                                         type="checkbox"
                                         checked={selectedTileMultipliers.includes(mult)}

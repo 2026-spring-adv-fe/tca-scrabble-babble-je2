@@ -4,16 +4,16 @@ import { durationFormatter } from 'human-readable';
 // Exported type definitions...
 //
 
-
-
 export type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
+export type TileMultiplier = "Double-Letter" | "Triple-Letter" | "Double-Word" | "Triple-Word";
 export type MoveRecord = {
     moveNumber: number;
     roundNumber: number;
     player: string;
     moveType: MoveType;
     wordScore: number;
+    tileMultipliers?: TileMultiplier[];
     scoreDelta: number;
 };
 
@@ -33,7 +33,7 @@ export type GameResult = {
     playerScores: PlayerGameScore[];
 };
 
- export type LeaderboardEntry = {
+export type LeaderboardEntry = {
     wins: number;
     losses: number;
     avg: string;
@@ -42,6 +42,10 @@ export type GameResult = {
     totalGameScore: number;
     avgGameScore: string;
     name: string;
+    doubleLetterCount: number;
+    tripleLetterCount: number;
+    doubleWordCount: number;
+    tripleWordCount: number;
 };
 
 export type GeneralFacts = {
@@ -284,6 +288,28 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             : 0
         ;
 
+        // Tabulate tile multiplier usage by type for this player
+        const playerMoves = games
+            .flatMap(x => x.moves)
+            .filter(x => x.player === player && x.tileMultipliers && Array.isArray(x.tileMultipliers));
+
+        const doubleLetterCount = playerMoves.reduce(
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Double-Letter").length ?? 0),
+            0
+        );
+        const tripleLetterCount = playerMoves.reduce(
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Triple-Letter").length ?? 0),
+            0
+        );
+        const doubleWordCount = playerMoves.reduce(
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Double-Word").length ?? 0),
+            0
+        );
+        const tripleWordCount = playerMoves.reduce(
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Triple-Word").length ?? 0),
+            0
+        );
+
         return {
             wins: countOfWins,
             losses: totalGames - countOfWins,
@@ -292,8 +318,11 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             avgWordScore: `${avgWordScore.toFixed(1)}`,
             totalGameScore,
             avgGameScore: `${avgGameScore.toFixed(1)}`,
-            name: player
-
+            name: player,
+            doubleLetterCount,
+            tripleLetterCount,
+            doubleWordCount,
+            tripleWordCount,
         };
     };
 
