@@ -10,12 +10,15 @@ type PlayProps = {
 
 type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
+type TileMultiplier = "DL" | "TL" | "DW" | "TW";
+
 type MoveRecord = {
     moveNumber: number;
     roundNumber: number;
     player: string;
     moveType: MoveType;
     wordScore: number;
+    tileMultipliers?: TileMultiplier[];
     scoreDelta: number;
 };
 
@@ -39,6 +42,8 @@ export const Play: React.FC<PlayProps> = ({
     const [tileAdjustments, setTileAdjustments] = useState<Record<string, number>>(
         Object.fromEntries((players ?? []).map((player) => [player, 0]))
     );
+    // State for selected tile multipliers for the current move
+    const [selectedTileMultipliers, setSelectedTileMultipliers] = useState<TileMultiplier[]>([]);
     const [completedGame, setCompletedGame] = useState<GameResult | null>(null);
     const isGameFinished = completedGame !== null;
 
@@ -109,6 +114,7 @@ export const Play: React.FC<PlayProps> = ({
             player: activePlayer,
             moveType: currentMoveType,
             wordScore: normalizedWordScore,
+            tileMultipliers: selectedTileMultipliers.length > 0 ? [...selectedTileMultipliers] : undefined,
             scoreDelta: normalizedWordScore,
         };
 
@@ -118,6 +124,7 @@ export const Play: React.FC<PlayProps> = ({
         ]);
 
         setWordScore("0");
+        setSelectedTileMultipliers([]);
 
         setActivePlayerIndex((previousIndex) => {
             return (previousIndex + 1) % players.length;
@@ -139,6 +146,7 @@ export const Play: React.FC<PlayProps> = ({
         setTileAdjustments(
             Object.fromEntries((players ?? []).map((player) => [player, 0]))
         );
+        setSelectedTileMultipliers([]);
         setCompletedGame(null);
     };
 
@@ -282,6 +290,32 @@ export const Play: React.FC<PlayProps> = ({
                         />
                     </div>
 
+                    {/* TileMultiplier checkboxes */}
+                    <div className="form-control mb-4">
+                        <label className="label">
+                            <span className="label-text">Tile Multipliers</span>
+                        </label>
+                        <div className="flex gap-4">
+                            {(["DL", "TL", "DW", "TW"] as TileMultiplier[]).map((mult) => (
+                                <label key={mult} className="flex items-center gap-1">
+                                    <input
+                                        type="checkbox"
+                                        checked={selectedTileMultipliers.includes(mult)}
+                                        disabled={currentMoveType !== "Play" || isGameFinished}
+                                        onChange={() => {
+                                            setSelectedTileMultipliers((prev) =>
+                                                prev.includes(mult)
+                                                    ? prev.filter((m) => m !== mult)
+                                                    : [...prev, mult]
+                                            );
+                                        }}
+                                    />
+                                    {mult}
+                                </label>
+                            ))}
+                        </div>
+                    </div>
+
                     <button
                         className="btn btn-secondary w-full"
                         onClick={addMove}
@@ -342,6 +376,7 @@ export const Play: React.FC<PlayProps> = ({
                                     <th>Player</th>
                                     <th>Move</th>
                                     <th>Word Score</th>
+                                    <th>Tile Multipliers</th>
                                     <th>Score Delta</th>
                                 </tr>
                             </thead>
@@ -353,6 +388,7 @@ export const Play: React.FC<PlayProps> = ({
                                         <td>{move.player}</td>
                                         <td>{move.moveType}</td>
                                         <td>{move.wordScore}</td>
+                                        <td>{move.tileMultipliers?.join(", ") ?? ""}</td>
                                         <td>{move.scoreDelta}</td>
                                     </tr>
                                 ))}
