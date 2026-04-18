@@ -6,7 +6,7 @@ import { durationFormatter } from 'human-readable';
 
 
 
-export type MoveType = "Play" | "Swap" | "Pass";
+export type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
 export type MoveRecord = {
     moveNumber: number;
