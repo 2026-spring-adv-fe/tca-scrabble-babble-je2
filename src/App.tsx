@@ -12,7 +12,7 @@ import {
     getGeneralFacts,
     getLeaderboard,
     getPreviousPlayers,
-    getScoreInsights,
+    // getScoreInsights,
     type GameResult,
   } from './GameResults';
 import { useState, useEffect } from 'react';
@@ -146,9 +146,9 @@ const App = () => {
                   leaderboard={
                     getLeaderboard(gameResults)
                   }
-                  scoreInsights={
-                    getScoreInsights(gameResults)
-                  }
+                  // scoreInsights={
+                  //   getScoreInsights(gameResults)
+                  // }
                 />
               }
             />
