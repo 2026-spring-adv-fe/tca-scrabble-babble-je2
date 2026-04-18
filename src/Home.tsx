@@ -1,6 +1,16 @@
 import { useNavigate } from "react-router";
-import type { GeneralFacts, LeaderboardEntry, ScoreInsights } from "./GameResults";
+import type { GeneralFacts, LeaderboardEntry } from "./GameResults";
 import { useEffect } from "react";
+
+type ScoreInsights = {
+    totalPlayerEntries: number;
+    totalWordScore: number;
+    totalGameScore: number;
+    avgWordScorePerPlayerGame: number;
+    avgGameScorePerPlayerGame: number;
+    topWordScoreTotal: number;
+    topGameScore: number;
+};
 
 export const APP_TITLE = "Scrabble-Babble! A Scrabble Companion";
 
