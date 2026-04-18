@@ -296,10 +296,10 @@ export const Play: React.FC<PlayProps> = ({
                             <span className="label-text">Tile Multipliers</span>
                         </label>
                         <div className="flex gap-4">
-                            {(["DL🩵", "TL💎", "DW🩷", "TW💌"] as TileMultiplier[]).map((mult) => (
+                            {(["Double-Letter", "Triple-Letter", "Double-Word", "Triple-Word"] as TileMultiplier[]).map((mult) => (
                                 <label key={mult} className="flex items-center gap-2">
                                     <input
-                                        type="checkbox"
+                                        type="checkbox" className="checkbox checkbox-info" 
                                         checked={selectedTileMultipliers.includes(mult)}
                                         disabled={currentMoveType !== "Play" || isGameFinished}
                                         onChange={() => {
