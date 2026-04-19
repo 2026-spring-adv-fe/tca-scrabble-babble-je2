@@ -28,6 +28,8 @@ export const Home: React.FC<HomeProps> = ({
     //We'll write code here. . .
 
     //then return some jsx...
+    // Debug: Show Play moves and word scores for each player
+    const debugGameResults = (window as any)?.debugGameResults;
     return (
         <>
             <div className="flex flex-col gap-2 mb-4 w-full lg:w-64">
@@ -125,9 +127,7 @@ export const Home: React.FC<HomeProps> = ({
                             {
                                 leaderboard.map(
                                     x => (
-                                        <tr
-                                            key={x.name}
-                                        >
+                                        <tr key={x.name}>
                                             <td>{x.name}</td>
                                             <td>{x.wins}</td>
                                             <td>{x.losses}</td>
@@ -145,6 +145,28 @@ export const Home: React.FC<HomeProps> = ({
                             }
                         </tbody>
                     </table>
+                    {/* Debug output for Play moves and word scores per player */}
+                    {/* <div className="mt-4">
+                        <h3 className="font-bold">Debug: Player Play Moves & Word Scores</h3>
+                        {leaderboard.map(x => (
+                            <div key={x.name} className="mb-2">
+                                <div className="font-semibold">{x.name}</div>
+                                <ul className="text-xs">
+                                    {(() => {
+                                        // Find all Play moves for this player from all games
+                                        const allGameResults = debugGameResults || [];
+                                        const playMoves = allGameResults
+                                            .flatMap((g: any) => g.moves)
+                                            .filter((m: any) => m.player === x.name && m.moveType === "Play");
+                                        if (playMoves.length === 0) return <li>No Play moves found.</li>;
+                                        return playMoves.map((m: any, idx: number) => (
+                                            <li key={idx}>Move {m.moveNumber}: wordScore={m.wordScore}</li>
+                                        ));
+                                    })()}
+                                </ul>
+                            </div>
+                        ))}
+                    </div> */}
                 </div>
             </div>
         </>
