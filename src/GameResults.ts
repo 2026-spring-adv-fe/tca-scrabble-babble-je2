@@ -303,8 +303,8 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             ? totalGameScore / totalGames
             : 0;
 
-        // Average word score should be based on number of moves (turns) for this player
-        const playerMovesCount = games
+        // Average word score should be based only on 'Play' moves for this player
+        const playerPlayMoves = games
             .flatMap(x => x.moves)
             .filter(x => x.player === player && x.moveType === "Play");
 
