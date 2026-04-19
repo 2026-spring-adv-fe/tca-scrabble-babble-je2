@@ -86,8 +86,8 @@ export const Home: React.FC<HomeProps> = ({
             </div>
             <div className="card bg-base-100 w-full shadow-lg my-2 overflow-x-scroll">
                 <div className="card-body p-2">
-                    <h2 className="card-title">Wins-Losses Leaderboard</h2>
-                    <table className="table table-zeb">
+                    <h2 className="card-title">Player Stats & Leaderboard</h2>
+                    <table className="table table-xs">
                         <thead>
                             <tr>
                                 <th>Player</th>
