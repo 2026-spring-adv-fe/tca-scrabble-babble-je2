@@ -12,6 +12,8 @@ type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
 type TileMultiplier = "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
 
+// type currentRound = number;
+
 type MoveRecord = {
     moveNumber: number;
     roundNumber: number;
@@ -39,24 +41,22 @@ export const Play: React.FC<PlayProps> = ({
     const [currentMoveType, setCurrentMoveType] = useState<MoveType>("Play");
     const [wordScore, setWordScore] = useState("");
     const [activePlayerIndex, setActivePlayerIndex] = useState(0);
-    const [tileAdjustments, setTileAdjustments] = useState<Record<string, number>>(
-        Object.fromEntries((players ?? []).map((player) => [player, 0]))
+    const [tileAdjustments, setTileAdjustments] = useState<Record<string, string>>(
+        Object.fromEntries((players ?? []).map((player) => [player, ""]))
     );
+
     // State for selected tile multipliers for the current move
     const [selectedTileMultipliers, setSelectedTileMultipliers] = useState<TileMultiplier[]>([]);
     const [completedGame, setCompletedGame] = useState<GameResult | null>(null);
     const isGameFinished = completedGame !== null;
 
-    useEffect(
-        () => {
-            if (players) {
-                setTileAdjustments(
-                    Object.fromEntries(players.map((player) => [player, 0]))
-                );
-            }
-        },
-        [players],
-    );
+    useEffect(() => {
+    if (players) {
+        setTileAdjustments(
+            Object.fromEntries(players.map((player) => [player, ""]))
+            );
+        }
+    }, [players]);
 
     const activePlayer = players?.[activePlayerIndex] ?? "";
 
@@ -68,25 +68,22 @@ export const Play: React.FC<PlayProps> = ({
         ? Math.max(0, Number.parseInt(wordScore) || 0)
         : 0;
 
-    const playerTotals = useMemo(
-        () => {
-            if (!players) {
-                return {} as Record<string, {
-                    wordScoreTotal: number;
-                    tileAdjustment: number;
-                    gameScore: number;
-                }>;
-            }
+    const playerTotals = useMemo(() => {
+        if (!players) {
+            return {} as Record<string, {                    
+                wordScoreTotal: number;
+                tileAdjustment: number;
+                gameScore: number;
+            }>;
+        }
 
             return Object.fromEntries(
                 players.map((player) => {
                     const wordScoreTotal = moves
                         .filter((move) => move.player === player)
                         .reduce((sum, move) => sum + move.scoreDelta, 0);
-
-                    const tileAdjustment = tileAdjustments[player] ?? 0;
+                    const tileAdjustment = Number.parseInt(tileAdjustments[player]) || 0;
                     const gameScore = wordScoreTotal + tileAdjustment;
-
                     return [player, {
                         wordScoreTotal,
                         tileAdjustment,
@@ -94,22 +91,18 @@ export const Play: React.FC<PlayProps> = ({
                     }];
                 })
             );
-        },
-        [moves, players, tileAdjustments],
-    );
+    }, [moves, players, tileAdjustments]);
 
     const canAddMove = Boolean(players && players.length > 0 && !isGameFinished && (currentMoveType !== "Play" || wordScore.length > 0));
 
     const addMove = () => {
-        if (!players || players.length === 0) {
-            return;
-        }
-
         const nextMoveNumber = moves.length + 1;
-        const currentRound = Math.floor(moves.length / players.length) + 1;
+        const currentRound = players && players.length > 0
+            ? Math.floor(moves.length / players.length) + 1
+            : 1;
 
         const nextMove: MoveRecord = {
-            moveNumber: nextMoveNumber,
+            moveNumber: nextMoveNumber,            
             roundNumber: currentRound,
             player: activePlayer,
             moveType: currentMoveType,
@@ -134,7 +127,7 @@ export const Play: React.FC<PlayProps> = ({
     const handleTileAdjustmentChange = (player: string, value: string) => {
         setTileAdjustments((previous) => ({
             ...previous,
-            [player]: Number.parseInt(value) || 0,
+            [player]: value,
         }));
     };
 
@@ -144,7 +137,7 @@ export const Play: React.FC<PlayProps> = ({
         setWordScore("0");
         setActivePlayerIndex(0);
         setTileAdjustments(
-            Object.fromEntries((players ?? []).map((player) => [player, 0]))
+            Object.fromEntries((players ?? []).map((player) => [player, ""]))
         );
         setSelectedTileMultipliers([]);
         setCompletedGame(null);
@@ -353,11 +346,11 @@ export const Play: React.FC<PlayProps> = ({
                                         <input
                                             type="number"
                                             className="input input-bordered"
-                                            value={tileAdjustments[player] ?? 0}
-                                            onChange={(e) => handleTileAdjustmentChange(player, e.target.value)}
+                                            value={tileAdjustments[player] ?? ""}
                                             inputMode="numeric"
-                                            placeholder="0 (can be negative)"
                                             step="1"
+                                            onChange={(e) => handleTileAdjustmentChange(player, e.target.value)}
+                                            onFocus={e => e.target.select()}
                                         />
                                     </div>
                                 </div>
