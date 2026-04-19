@@ -45,12 +45,8 @@ export const Home: React.FC<HomeProps> = ({
                     <table className="table table-zebra">
                         <tbody>
                             <tr>
-                                <td>Last Played</td>
+                                <td>Last Game Played</td>
                                 <th>{generalFacts.lastPlayed}</th>
-                            </tr>
-                            <tr>
-                                <td>Total Games</td>
-                                <th>{generalFacts.totalGames}</th>
                             </tr>
                             <tr>
                                 <td>Shortest Game</td>
@@ -61,24 +57,40 @@ export const Home: React.FC<HomeProps> = ({
                                 <th>{generalFacts.longestGame}</th>
                             </tr>
                             <tr>
+                                <td>Total Number of Games Played</td>
+                                <th>{generalFacts.totalGames}</th>
+                            </tr>
+                            <tr>
                                 <td>Total Player Entries</td>
                                 <th>{scoreInsights.totalPlayerEntries}</th>
                             </tr>
                             <tr>
-                                <td>Avg Word Score</td>
-                                <th>{scoreInsights.avgWordScorePerPlayerGame}</th>
+                                <td>Total Number of Player Moves - all Move Types</td>
+                                <th>{scoreInsights.totalMoves}</th>
                             </tr>
                             <tr>
-                                <td>Avg Game Score</td>
-                                <th>{scoreInsights.avgGameScorePerPlayerGame}</th>
+                                <td>Mean Moves per Game</td>
+                                <th>{scoreInsights.avgMovesPerGame}</th>
                             </tr>
                             <tr>
-                                <td>Top Word-Score Total</td>
+                                <td>Highest Single Player-Word-Score</td>
                                 <th>{scoreInsights.topWordScoreTotal}</th>
                             </tr>
                             <tr>
-                                <td>Top Game Score</td>
+                                <td>Mean Player-Word-Score (Play moves only)</td>
+                                <th>{scoreInsights.avgWordScorePerPlayerGame}</th>
+                            </tr>
+                            <tr>
+                                <td>Mean Player-Move-Score (all move types)</td>
+                                <th>{scoreInsights.avgMoveScore}</th>
+                            </tr>
+                            <tr>
+                                <td>Highest Single Game Score</td>
                                 <th>{scoreInsights.topGameScore}</th>
+                            </tr>
+                            <tr>
+                                <td>Mean Game Score</td>
+                                <th>{scoreInsights.avgGameScorePerPlayerGame}</th>
                             </tr>
                         </tbody>
                     </table>

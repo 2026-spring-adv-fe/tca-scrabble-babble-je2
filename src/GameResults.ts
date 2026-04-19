@@ -65,7 +65,10 @@ export type ScoreInsights = {
     totalPlayerEntries: number;
     totalWordScore: number;
     totalGameScore: number;
-    avgWordScorePerPlayerGame: string;
+    totalMoves: number;
+    avgMovesPerGame: string;
+    avgWordScorePerPlayerGame: string; // Only 'Play' moves
+    avgMoveScore: string; // All move types
     avgGameScorePerPlayerGame: string;
     topWordScoreTotal: number;
     topGameScore: number;
@@ -160,6 +163,7 @@ export const getPreviousPlayers = (
 
 export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
     const playerScores = games.flatMap((game) => game.playerScores);
+    const allMoves = games.flatMap((game) => game.moves);
 
     const totalPlayerEntries = playerScores.length;
     const totalWordScore = playerScores.reduce(
@@ -171,16 +175,34 @@ export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
         0,
     );
 
-    const avgWordScorePerPlayerGame = totalPlayerEntries > 0
-        ? totalWordScore / totalPlayerEntries
+    // Total number of moves (turns) for all players/games
+    const totalMoves = allMoves.length;
+    // Average number of moves per game
+    const avgMovesPerGame = games.length > 0
+        ? totalMoves / games.length
         : 0;
 
+    // Only 'Play' moves for avgWordScore
+    const playMoves = allMoves.filter(move => move.moveType === "Play");
+    const totalWordScoreFromPlayMoves = playMoves.reduce((acc, move) => acc + move.wordScore, 0);
+    const avgWordScorePerPlayerGame = playMoves.length > 0
+        ? totalWordScoreFromPlayMoves / playMoves.length
+        : 0;
+
+    // All move types for avgMoveScore
+    const totalWordScoreFromAllMoves = allMoves.reduce((acc, move) => acc + move.wordScore, 0);
+    const avgMoveScore = totalMoves > 0
+        ? totalWordScoreFromAllMoves / totalMoves
+        : 0;
+
+    // Average game score remains based on player entries
     const avgGameScorePerPlayerGame = totalPlayerEntries > 0
         ? totalGameScore / totalPlayerEntries
         : 0;
 
-    const topWordScoreTotal = totalPlayerEntries > 0
-        ? Math.max(...playerScores.map((score) => score.wordScoreTotal))
+    // Top single word score from all moves
+    const topWordScoreTotal = totalMoves > 0
+        ? Math.max(...allMoves.map((move) => move.wordScore))
         : 0;
 
     const topGameScore = totalPlayerEntries > 0
@@ -191,7 +213,10 @@ export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
         totalPlayerEntries,
         totalWordScore,
         totalGameScore,
+        totalMoves,
+        avgMovesPerGame: `${avgMovesPerGame.toFixed(1)}`,
         avgWordScorePerPlayerGame: `${avgWordScorePerPlayerGame.toFixed(1)}`,
+        avgMoveScore: `${avgMoveScore.toFixed(1)}`,
         avgGameScorePerPlayerGame: `${avgGameScorePerPlayerGame.toFixed(1)}`,
         topWordScoreTotal,
         topGameScore,
@@ -273,15 +298,19 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             0,
         );
 
+
         const avgGameScore = totalGames > 0
             ? totalGameScore / totalGames
-            : 0
-        ;
+            : 0;
 
-        const avgWordScore = totalGames > 0
-            ? totalWordScore / totalGames
-            : 0
-        ;
+        // Average word score should be based on number of moves (turns) for this player
+        const playerMovesCount = games
+            .flatMap(x => x.moves)
+            .filter(x => x.player === player).length;
+
+        const avgWordScore = playerMovesCount > 0
+            ? totalWordScore / playerMovesCount
+            : 0;
 
         const avg = totalGames > 0
             ? countOfWins / totalGames

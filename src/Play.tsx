@@ -377,7 +377,7 @@ export const Play: React.FC<PlayProps> = ({
                                     <th>Move</th>
                                     <th>Word Score</th>
                                     <th>Tile Multipliers</th>
-                                    <th>Score Delta</th>
+                                    {/* <th>Score Delta</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -389,7 +389,7 @@ export const Play: React.FC<PlayProps> = ({
                                         <td>{move.moveType}</td>
                                         <td>{move.wordScore}</td>
                                         <td>{move.tileMultipliers?.join(", ") ?? ""}</td>
-                                        <td>{move.scoreDelta}</td>
+                                        {/* <td>{move.scoreDelta}</td> */}
                                     </tr>
                                 ))}
                             </tbody>
