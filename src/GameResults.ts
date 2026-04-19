@@ -6,7 +6,7 @@ import { durationFormatter } from 'human-readable';
 
 export type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
-export type TileMultiplier = "Double-Letter" | "Triple-Letter" | "Double-Word" | "Triple-Word";
+export type TileMultiplier = "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
 export type MoveRecord = {
     moveNumber: number;
     roundNumber: number;
