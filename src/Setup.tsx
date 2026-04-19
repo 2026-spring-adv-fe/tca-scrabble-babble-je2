@@ -66,55 +66,37 @@ export const Setup: React.FC<SetupProps> = ({
 
     //then return some jsx...
     return (
-        <>  
-            <button 
-                className="btn btn-outline btn-secondary btn-lg w-full lg:w-64"
-                onClick={
-                    () => {
-                        setCurrentPlayers(
-                            availablePlayers
-                                .filter(x => x.selected)
-                                .map(x => x.name)
-                        );
-                        nav("/play");
-                    } 
-                }  
-                disabled={
-                    !twoToFourPlayersChosen
-                }            
-            >    
-            {/* START GAME BUTTON IS DISABLED UNTIL 2 PLAYERS AND AFTER 4 PLAYERS ARE CHOSEN */}
-                {
-                    !twoToFourPlayersChosen
-                        ? 'Choose 2 to 4 Players'
-                        : 'Start Game'
-                }
-
-             {/* <button 
-                className="btn btn-outline btn-secondary btn-lg w-full lg:w-64 mt-4"
-                onClick={
-                    () => {
-                        setCurrentPlayers(
-                            availablePlayers
-                                .filter(x => x.selected)
-                                .map(x => x.name)
-                        );
-                        nav("/play");
-                    } 
-                }  
-                disabled={
-                    !onePlayerChosen
-                }            
-            >    
-                {
-                    !onePlayerChosen
-                        ? 'Choose 1 Player'
-                        : 'Start Solitaire Game'
-                }
-            </button>    */}
-
-            {/* DAISYUI COMP JOIN - INPUT + BUTTON */}
-            </button>
+        <>
+            <div className="flex flex-col gap-2 mb-4 w-full lg:w-64">
+                <button
+                    className="btn btn-outline btn-primary btn-lg w-full"
+                    onClick={() => nav("/")}
+                >
+                    Home
+                </button>
+                <button 
+                    className="btn btn-outline btn-secondary btn-lg w-full"
+                    onClick={
+                        () => {
+                            setCurrentPlayers(
+                                availablePlayers
+                                    .filter(x => x.selected)
+                                    .map(x => x.name)
+                            );
+                            nav("/play");
+                        } 
+                    }  
+                    disabled={
+                        !twoToFourPlayersChosen
+                    }            
+                >    
+                    {
+                        !twoToFourPlayersChosen
+                            ? 'Choose 2 to 4 Players'
+                            : 'Start Game'
+                    }
+                </button>
+            </div>
                 <div className="join mt-4 w-full"
                 >
             {/* ADD NEW PLAYER - INPUT */}

@@ -116,7 +116,7 @@ export const Play: React.FC<PlayProps> = ({
             nextMove,
         ]);
 
-        setWordScore("0");
+        setWordScore("");
         setSelectedTileMultipliers([]);
 
         setActivePlayerIndex((previousIndex) => {
@@ -202,6 +202,20 @@ export const Play: React.FC<PlayProps> = ({
 
     return (
         <>
+            <div className="flex flex-col gap-2 mb-4 w-full lg:w-64">
+                <button
+                    className="btn btn-outline btn-primary btn-lg w-full"
+                    onClick={() => nav("/")}
+                >
+                    Home
+                </button>
+                <button
+                    className="btn btn-outline btn-secondary btn-lg w-full"
+                    onClick={() => nav("/setup")}
+                >
+                    Setup
+                </button>
+            </div>
             {isGameFinished && completedGame && (
                 <div className="card bg-neutral text-neutral-content shadow-lg p-4 mb-4">
                     <div className="grid gap-4 lg:grid-cols-[auto_1fr] items-center">

@@ -30,14 +30,20 @@ export const Home: React.FC<HomeProps> = ({
     //then return some jsx...
     return (
         <>
-
-            <button 
-                className="btn btn-outline btn-secondary btn-lg w-full lg:w-64"
-                onClick={
-                    () => nav('/setup')}
-            >
-                Setup a Game
-            </button>
+            <div className="flex flex-col gap-2 mb-4 w-full lg:w-64">
+                <button 
+                    className="btn btn-outline btn-secondary btn-lg w-full"
+                    onClick={() => nav('/setup')}
+                >
+                    Setup a Game
+                </button>
+                <button
+                    className="btn btn-outline btn-primary btn-lg w-full"
+                    onClick={() => nav('/play')}
+                >
+                    Resume Game
+                </button>
+            </div>
 
             <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
                 <div className="card-body p-2">
