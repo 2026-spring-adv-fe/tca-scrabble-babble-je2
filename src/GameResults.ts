@@ -294,19 +294,19 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             .filter(x => x.player === player && x.tileMultipliers && Array.isArray(x.tileMultipliers));
 
         const doubleLetterCount = playerMoves.reduce(
-            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Double-Letter").length ?? 0),
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Dbl Letter").length ?? 0),
             0
         );
         const tripleLetterCount = playerMoves.reduce(
-            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Triple-Letter").length ?? 0),
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Trpl Letter").length ?? 0),
             0
         );
         const doubleWordCount = playerMoves.reduce(
-            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Double-Word").length ?? 0),
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Dbl Word").length ?? 0),
             0
         );
         const tripleWordCount = playerMoves.reduce(
-            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Triple-Word").length ?? 0),
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Trpl Word").length ?? 0),
             0
         );
 
