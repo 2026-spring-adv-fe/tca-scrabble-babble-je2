@@ -120,6 +120,9 @@ export const Play: React.FC<PlayProps> = ({
         setSelectedTileMultipliers([]);
 
         setActivePlayerIndex((previousIndex) => {
+            if (!players || players.length === 0) {
+                return 0;
+            }
             return (previousIndex + 1) % players.length;
         });
     };
