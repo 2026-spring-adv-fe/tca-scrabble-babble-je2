@@ -306,10 +306,11 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
         // Average word score should be based on number of moves (turns) for this player
         const playerMovesCount = games
             .flatMap(x => x.moves)
-            .filter(x => x.player === player).length;
+            .filter(x => x.player === player && x.moveType === "Play");
 
-        const avgWordScore = playerMovesCount > 0
-            ? totalWordScore / playerMovesCount
+        const totalWordScoreFromPlayMoves = playerPlayMoves.reduce((acc, move) => acc + move.wordScore, 0);
+        const avgWordScore = playerPlayMoves.length > 0
+            ? totalWordScoreFromPlayMoves / playerPlayMoves.length
             : 0;
 
         const avg = totalGames > 0
@@ -338,6 +339,13 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Trpl Word").length ?? 0),
             0
         );
+
+        // DEBUG: Log playerPlayMoves for inspection
+        if (typeof window !== 'undefined' && window.console) {
+            console.log(`Leaderboard debug for player: ${player}`);
+            console.log('Play moves:', playerPlayMoves);
+            console.log('Total word score from Play moves:', totalWordScoreFromPlayMoves);
+        }
 
         return {
             wins: countOfWins,
@@ -372,4 +380,4 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
         ? sum / results.length
         : 0
     ;
-};    
+};
