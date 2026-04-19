@@ -37,7 +37,7 @@ export const Play: React.FC<PlayProps> = ({
     const [startTimestamp] = useState(new Date().toISOString());
     const [moves, setMoves] = useState<MoveRecord[]>([]);
     const [currentMoveType, setCurrentMoveType] = useState<MoveType>("Play");
-    const [wordScore, setWordScore] = useState("0");
+    const [wordScore, setWordScore] = useState("");
     const [activePlayerIndex, setActivePlayerIndex] = useState(0);
     const [tileAdjustments, setTileAdjustments] = useState<Record<string, number>>(
         Object.fromEntries((players ?? []).map((player) => [player, 0]))
@@ -284,9 +284,12 @@ export const Play: React.FC<PlayProps> = ({
                             type="number"
                             className="input input-bordered"
                             min="0"
-                            value={normalizedWordScore}
+                            value={wordScore}
+                            placeholder="Enter your word score!"
                             disabled={currentMoveType !== "Play" || isGameFinished}
                             onChange={(e) => setWordScore(e.target.value)}
+                            onFocus={e => e.target.select()}
+                            inputMode="numeric"
                         />
                     </div>
 
@@ -352,6 +355,9 @@ export const Play: React.FC<PlayProps> = ({
                                             className="input input-bordered"
                                             value={tileAdjustments[player] ?? 0}
                                             onChange={(e) => handleTileAdjustmentChange(player, e.target.value)}
+                                            inputMode="numeric"
+                                            placeholder="0 (can be negative)"
+                                            step="1"
                                         />
                                     </div>
                                 </div>
