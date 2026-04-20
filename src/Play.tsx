@@ -24,6 +24,7 @@ type MoveRecord = {
     scoreDelta: number;
 };
 
+// COUNTING USE-EFFECTS: #1
 export const Play: React.FC<PlayProps> = ({ 
     addNewGameResult,
     setTitle,
@@ -46,10 +47,15 @@ export const Play: React.FC<PlayProps> = ({
     );
 
     // State for selected tile multipliers for the current move
+
+    // CONSIDER ENABLING INCREMENTATION OF SELECTED TILE MULTIPLIERS (THINK: "ADD +# TO SHOPPING CART"-TYPE FUNCTIONALITY) IN ORDER TO ACHIEVE ACCURATE TALLIES
+    // FOR SCENARIOS WHERE THE SAME MULTIPLIER-TYPE OCCURS IN THE SAME WORD/PLAY - NOT A FREQUENT OCCURRANCE, BUT HAPPENS.
     const [selectedTileMultipliers, setSelectedTileMultipliers] = useState<TileMultiplier[]>([]);
     const [completedGame, setCompletedGame] = useState<GameResult | null>(null);
     const isGameFinished = completedGame !== null;
 
+
+// COUNTING USE-EFFECTS: #2
     useEffect(() => {
     if (players) {
         setTileAdjustments(
