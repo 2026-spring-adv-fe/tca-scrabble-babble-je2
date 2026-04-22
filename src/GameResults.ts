@@ -61,6 +61,7 @@ export type AvgGameDuration = {
     avgGameDuration: string;
 };
 
+
 export type ScoreInsights = {
     totalPlayerEntries: number;
     totalWordScore: number;
@@ -227,7 +228,18 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
 
     const grouped = Map.groupBy(
         results,
+
         (x) => x.players.length,
+        // ({ players }) => players.length,
+        
+        // (x) => x.winner,
+        // (x) => new Date(x.start).getMonth(),
+        // (x) => new Date(x.start).toLocaleString(
+        //     'default',
+        //     {
+        //         month: 'short',
+        //     },
+        // ),
     );
 
     // console.log(
@@ -367,7 +379,17 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
         - Date.parse(result.start)
     ;
 
-    const getAvgGameDurationInMilliseconds = (results: GameResult[]) => {
+    // console.log(
+    //     getPreviousPlayers(
+    //         dummyGameResults
+    //     ),
+    //     getLeaderboard(
+    //         dummyGameResults
+    //     ),
+    // );
+
+
+const getAvgGameDurationInMilliseconds = (results: GameResult[]) => {
 
     // Add up the game durations for a total, simple reduce.
     const sum = results.reduce(
@@ -380,4 +402,4 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
         ? sum / results.length
         : 0
     ;
-};
+}; 
