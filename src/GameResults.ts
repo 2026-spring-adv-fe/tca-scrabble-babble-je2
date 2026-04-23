@@ -17,6 +17,12 @@ export type MoveRecord = {
     scoreDelta: number;
 };
 
+// Consider adding roundStats for enabling undo or edit of a prior entry, 
+// export type RoundStats = {
+//     roundNumber: number;
+
+// };
+
 export type PlayerGameScore = {
     player: string;
     wordScoreTotal: number;
