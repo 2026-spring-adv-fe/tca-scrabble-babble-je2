@@ -55,6 +55,24 @@ const App = () => {
   [],
 );
 
+  useEffect(
+    () => {
+    const loadEmail = async () => {
+      const result = await localforage.getItem<string>("email") ?? "";
+
+      if (!ignore)
+        setEmailInDialog(result);
+    }
+
+    let ignore = false;
+    loadEmail();
+    return () => {
+      ignore = true;
+    }
+  }, 
+  [],
+);
+
   // this allows us to store the array of two items that comes back from the function
   // rather than destructuring into the two consts (this happens further down the code)
   // in destructuring the tuple, we refer by index [] whether first or second item in the array
