@@ -210,12 +210,15 @@ const App = () => {
             className="modal modal-bottom sm:modal-middle"
           >
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Hello!</h3>
-            <p className="py-4">Press ESC key or click the button below to close</p>
+            <h3 className="font-bold text-lg">Enter an email address to save and load game results:</h3>
+            <input
+              type="text"
+              placeholder="Enter email address"
+              className="input input-bordered w-full mt-3"/>
             <div className="modal-action">
               <form method="dialog">
                 {/* if there is a button in form, it will close the modal */}
-                <button className="btn">Close</button>
+                <button className="btn">Save</button>
               </form>
             </div>
           </div>
