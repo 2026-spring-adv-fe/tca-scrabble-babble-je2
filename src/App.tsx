@@ -18,6 +18,10 @@ import {
   } from './GameResults';
 import { useState, useRef, useEffect } from 'react';
 import localforage from 'localforage';
+import {
+  saveGameToCloud,
+  loadGamesFromCloud
+} from './tca-cloud-api';
 
 const App = () => {
 
@@ -33,6 +37,8 @@ const App = () => {
   const currentPlayersStateTuple = useState<string[]>([]);
 
   const [emailInDialog, setEmailInDialog] = useState("foo@bar.com");
+
+  const [emailForCloudApi, setEmailForCloudApi] = useState("");
 
   const emailDialog = useRef<HTMLDialogElement>(null);
 
@@ -62,6 +68,7 @@ const App = () => {
 
       if (!ignore)
         setEmailInDialog(result);
+        setEmailForCloudApi(result);
     }
 
     let ignore = false;
@@ -83,13 +90,25 @@ const App = () => {
   // Calculated state and other functions
   //
   
-  const addNewGameResult = (gameResult: GameResult) => setGameResults(
+  const addNewGameResult = async (gameResult: GameResult) => {
+    // first, save the game result to the cloud.
+    if (emailForCloudApi.length > 0) {
+      await saveGameToCloud(
+        emailForCloudApi,
+        "tca-scrabble-26s",
+        gameResult.end,
+        gameResult,
+      );
+    }
+    // Optimistically update local state...
+    // Assume it was correctly saved to the cloud
+    setGameResults(
     [
       ...gameResults,
       gameResult,
     ]
   );
-  //
+  }  //
   // Return JSX...
   //
 
@@ -248,11 +267,17 @@ const App = () => {
                 <button 
                   className="btn btn-primary btn-lg"
                   onClick={
-                    async () => await localforage.setItem(
-                      "email",
-                      emailInDialog,
-                    )
-                  }>Save</button>
+                    async () => {
+                      const savedEmail = await localforage.setItem(
+                        "email",
+                        emailInDialog,
+                      );
+                      setEmailForCloudApi(savedEmail)                      
+                    }
+                  }
+                >                   
+                  Save
+                </button>
               </form>
             </div>
           </div>
