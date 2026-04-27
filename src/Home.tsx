@@ -31,7 +31,8 @@ export const Home: React.FC<HomeProps> = ({
 
     //then return some jsx...
     // Debug: Show Play moves and word scores for each player
-    const debugGameResults = (window as any)?.debugGameResults;
+    // const debugGameResults = (window as any)?.debugGameResults;
+
     return (
         <>
             <div className="flex flex-col gap-2 mb-4 w-full lg:w-64">

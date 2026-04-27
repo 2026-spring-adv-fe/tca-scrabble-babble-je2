@@ -18,10 +18,6 @@ import {
   } from './GameResults';
 import { useState, useRef, useEffect } from 'react';
 import localforage from 'localforage';
-import {
-  saveGameToCloud,
-  loadGamesFromCloud
-} from './tca-cloud-api';
 
 const App = () => {
 
@@ -70,6 +66,7 @@ const App = () => {
         setEmailInDialog(result);
         setEmailForCloudApi(result);
     }
+    
 
     let ignore = false;
     loadEmail();
@@ -79,6 +76,34 @@ const App = () => {
   }, 
   [],
 );
+
+  useEffect(
+    () => {
+    const loadGames = async () => {
+      const games = await loadGamesFromCloud(
+        emailForCloudApi,
+        "tca-scrabble-babble-26s"
+      );
+
+    if (!ignore) {
+    //   //   // setGameResults(games);
+    //  
+    }
+    }
+    
+
+    let ignore = false;
+    // if (emailForCloudApi.length > 0)
+    loadGames();
+  
+    return () => {
+      ignore = true;
+    }
+  }, 
+  // dependancy array - if any of these values change, the useEffect will run again.
+  [emailForCloudApi],
+);
+
 
   // this allows us to store the array of two items that comes back from the function
   // rather than destructuring into the two consts (this happens further down the code)
@@ -91,24 +116,28 @@ const App = () => {
   //
   
   const addNewGameResult = async (gameResult: GameResult) => {
-    // first, save the game result to the cloud.
+
+    // First save the game result to the cloud
     if (emailForCloudApi.length > 0) {
       await saveGameToCloud(
         emailForCloudApi,
-        "tca-scrabble-26s",
+        "tca-scrabble-babble-26s",
         gameResult.end,
         gameResult,
       );
+
     }
-    // Optimistically update local state...
-    // Assume it was correctly saved to the cloud
+    // Second, optimistically update local state
+    // assume it was correctly saved to the cloud
+    
     setGameResults(
-    [
-      ...gameResults,
-      gameResult,
-    ]
-  );
-  }  //
+      [
+        ...gameResults,
+        gameResult,
+      ]
+    );
+  }
+  //
   // Return JSX...
   //
 
@@ -266,6 +295,7 @@ const App = () => {
                 {/* if there is a button in form, it will close the modal */}
                 <button 
                   className="btn btn-primary btn-lg"
+                  // making the call to get the saved email
                   onClick={
                     async () => {
                       const savedEmail = await localforage.setItem(
