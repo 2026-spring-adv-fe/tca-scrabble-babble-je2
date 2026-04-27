@@ -7,6 +7,7 @@ import { durationFormatter } from 'human-readable';
 export type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
 export type TileMultiplier = "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
+
 export type MoveRecord = {
     moveNumber: number;
     roundNumber: number;
@@ -66,7 +67,6 @@ export type AvgGameDuration = {
     numberOfGames: number;
     avgGameDuration: string;
 };
-
 
 export type ScoreInsights = {
     totalPlayerEntries: number;
@@ -167,11 +167,9 @@ export const getPreviousPlayers = (
         )
         ;
 
-
 export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
     const playerScores = games.flatMap((game) => game.playerScores);
     const allMoves = games.flatMap((game) => game.moves);
-
     const totalPlayerEntries = playerScores.length;
     const totalWordScore = playerScores.reduce(
         (acc, score) => acc + score.wordScoreTotal,
@@ -181,37 +179,31 @@ export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
         (acc, score) => acc + score.gameScore,
         0,
     );
-
     // Total number of moves (turns) for all players/games
     const totalMoves = allMoves.length;
     // Average number of moves per game
     const avgMovesPerGame = games.length > 0
         ? totalMoves / games.length
         : 0;
-
     // Only 'Play' moves for avgWordScore
     const playMoves = allMoves.filter(move => move.moveType === "Play");
     const totalWordScoreFromPlayMoves = playMoves.reduce((acc, move) => acc + move.wordScore, 0);
     const avgWordScorePerPlayerGame = playMoves.length > 0
         ? totalWordScoreFromPlayMoves / playMoves.length
         : 0;
-
     // All move types for avgMoveScore
     const totalWordScoreFromAllMoves = allMoves.reduce((acc, move) => acc + move.wordScore, 0);
     const avgMoveScore = totalMoves > 0
         ? totalWordScoreFromAllMoves / totalMoves
         : 0;
-
     // Average game score remains based on player entries
     const avgGameScorePerPlayerGame = totalPlayerEntries > 0
         ? totalGameScore / totalPlayerEntries
         : 0;
-
     // Top single word score from all moves
     const topWordScoreTotal = totalMoves > 0
         ? Math.max(...allMoves.map((move) => move.wordScore))
         : 0;
-
     const topGameScore = totalPlayerEntries > 0
         ? Math.max(...playerScores.map((score) => score.gameScore))
         : 0;
@@ -294,53 +286,42 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
         const countOfWins = games.filter(
             x => x.winner == player
         ).length;
-
         const totalGames = games.filter(
             x => x.players.some(
                 y => y == player
             )
         ).length;
-
         const playerScores = games
             .flatMap(x => x.playerScores)
             .filter(x => x.player == player)
         ;
-
         const totalWordScore = playerScores.reduce(
             (acc, x) => acc + x.wordScoreTotal,
             0,
         );
-
         const totalGameScore = playerScores.reduce(
             (acc, x) => acc + x.gameScore,
             0,
         );
-
-
         const avgGameScore = totalGames > 0
             ? totalGameScore / totalGames
             : 0;
-
         // Average word score should be based only on 'Play' moves for this player
         const playerPlayMoves = games
             .flatMap(x => x.moves)
             .filter(x => x.player === player && x.moveType === "Play");
-
         const totalWordScoreFromPlayMoves = playerPlayMoves.reduce((acc, move) => acc + move.wordScore, 0);
         const avgWordScore = playerPlayMoves.length > 0
             ? totalWordScoreFromPlayMoves / playerPlayMoves.length
             : 0;
-
         const avg = totalGames > 0
             ? countOfWins / totalGames
             : 0
         ;
-
         // Tabulate tile multiplier usage by type for this player
         const playerMoves = games
             .flatMap(x => x.moves)
             .filter(x => x.player === player && x.tileMultipliers && Array.isArray(x.tileMultipliers));
-
         const doubleLetterCount = playerMoves.reduce(
             (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Dbl Letter").length ?? 0),
             0
