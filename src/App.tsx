@@ -82,6 +82,34 @@ const App = () => {
   [],
 );
 
+  useEffect(
+    () => {
+    const loadGames = async () => {
+      const games = await loadGamesFromCloud(
+        emailForCloudApi,
+        "tca-scrabble-babble-26s"
+      );
+
+    if (!ignore) {
+    //   //   // setGameResults(games);
+    //  
+    }
+    }
+    
+
+    let ignore = false;
+    // if (emailForCloudApi.length > 0)
+    loadGames();
+  
+    return () => {
+      ignore = true;
+    }
+  }, 
+  // dependancy array - if any of these values change, the useEffect will run again.
+  [emailForCloudApi],
+);
+
+
   // this allows us to store the array of two items that comes back from the function
   // rather than destructuring into the two consts (this happens further down the code)
   // in destructuring the tuple, we refer by index [] whether first or second item in the array
