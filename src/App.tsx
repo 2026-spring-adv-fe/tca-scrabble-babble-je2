@@ -94,9 +94,9 @@ const App = () => {
     
 
     let ignore = false;
-    // if (emailForCloudApi.length > 0)
-    loadGames();
-  
+    if (emailForCloudApi.length > 0) {
+      loadGames();
+    }
     return () => {
       ignore = true;
     }
@@ -281,6 +281,7 @@ const App = () => {
           <div className="modal-box">
             <h3 className="font-bold text-lg">Enter an email address to save and load game results:</h3>
             <input
+              id="email-input"
               type="text"
               placeholder="Enter email address"
               className="input input-bordered w-full mt-3 text-lg"
