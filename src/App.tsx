@@ -18,6 +18,7 @@ import {
   } from './GameResults';
 import { useState, useRef, useEffect } from 'react';
 import localforage from 'localforage';
+import { loadGamesFromCloud, saveGameToCloud } from './tca-cloud-api';
 
 const App = () => {
 
