@@ -15,6 +15,7 @@ import {
     getPreviousPlayers,
     getScoreInsights,
     type GameResult,
+    // getReverseChronGameData,
   } from './GameResults';
 import { useState, useRef, useEffect } from 'react';
 import localforage from 'localforage';
@@ -66,8 +67,7 @@ const App = () => {
       if (!ignore)
         setEmailInDialog(result);
         setEmailForCloudApi(result);
-    }
-    
+    }    
 
     let ignore = false;
     loadEmail();
@@ -86,13 +86,12 @@ const App = () => {
         "tca-scrabble-babble-26s"
       );
 
-    if (!ignore) {
-    //   //   // setGameResults(games);
-    //  
-    }
+      if (!ignore) {
+      //   //   // setGameResults(games);
+      //  
+      }
     }
     
-
     let ignore = false;
     if (emailForCloudApi.length > 0) {
       loadGames();
@@ -245,6 +244,9 @@ const App = () => {
                   scoreInsights={
                     getScoreInsights(gameResults)
                   }
+                  // gameHistory={
+                  //   getReverseChronGameData(gameResults)
+                  // }
                 />
               }
             />

@@ -264,7 +264,27 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
         )
     ;
 };
-
+// fun facts - reverse chronological games list with human readable durations
+export const getReverseChronGameData = (results: GameResult[]) => results
+    .sort(
+        (a, b) => Date.parse(b.end) - Date.parse(a.end)
+    )
+    .map(
+        x => ({
+            date: new Date(x.end).toLocaleDateString(),
+            duration: formatGameDuration(
+                Date.parse(x.end) - Date.parse(x.start)
+            ),
+            players: x.players
+                .map(
+                    y => `${y.name}${y.name === x.winner ? ' (W)' : ``}`
+                )
+                .join(", ")           
+            ,
+        })
+    ) 
+    
+    ;
 //
 // Helper functions
 //

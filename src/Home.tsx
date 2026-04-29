@@ -10,7 +10,15 @@ type HomeProps = {
     leaderboard: LeaderboardEntry[],
     scoreInsights: ScoreInsights,
     setTitle: (t: string) => void,
+    // gameHistory: any,
+    gameHistory: {
+        date: string;
+        duration: string;
+        players: string;
+    }[];
 };
+
+// export const gameHistory
 
 export const Home: React.FC<HomeProps> = ({
     generalFacts,
@@ -172,7 +180,7 @@ export const Home: React.FC<HomeProps> = ({
                     </div> */}
                 </div>
             </div>
-            <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
+            {/* <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
                 <div className="card-body p-2">
                     <h2 className="card-title">AVG Game Durations</h2>
                     <table className="table table-zebra">
@@ -207,7 +215,8 @@ export const Home: React.FC<HomeProps> = ({
                         </tbody>
                     </table>
                 </div>
-            </div>            
+            </div> */}
+                        
         </>
     )
 }
