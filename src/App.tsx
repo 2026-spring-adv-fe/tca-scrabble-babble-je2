@@ -87,8 +87,7 @@ const App = () => {
       );
 
       if (!ignore) {
-      //   //   // setGameResults(games);
-      //  
+       setGameResults(games);       
       }
     }
     
@@ -103,7 +102,6 @@ const App = () => {
   // dependancy array - if any of these values change, the useEffect will run again.
   [emailForCloudApi],
 );
-
 
   // this allows us to store the array of two items that comes back from the function
   // rather than destructuring into the two consts (this happens further down the code)
