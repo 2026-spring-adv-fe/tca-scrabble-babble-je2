@@ -20,6 +20,9 @@ export const saveGameToCloud = async (
 
     const dynamoGame = {
       
+      // pk==="partition key"
+      // sk==="sort key"
+      // gsi==="global secondary index"
       // Store everything in lowercase, makes email in
       // app case insensitive ! ! !
       pk: trimmedLowercaseEmail
