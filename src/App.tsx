@@ -233,7 +233,7 @@ const App = () => {
                   generalFacts={
                     getGeneralFacts(gameResults)
                   }
-                  avgGameDurations={
+                  avgGameDuration={
                     getAvgGameDurationsByPlayerCount(gameResults)
                   }
                   leaderboard={

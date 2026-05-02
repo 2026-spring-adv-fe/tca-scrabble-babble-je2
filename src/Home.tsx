@@ -6,7 +6,7 @@ export const APP_TITLE = "Scrabble-Babble! A Scrabble Companion";
 
 type HomeProps = {
     generalFacts: GeneralFacts,
-    avgGameDurations: AvgGameDuration[],
+    avgGameDuration: AvgGameDuration[],
     leaderboard: LeaderboardEntry[],
     scoreInsights: ScoreInsights,
     setTitle: (t: string) => void,
@@ -22,7 +22,7 @@ type HomeProps = {
 
 export const Home: React.FC<HomeProps> = ({
     generalFacts,
-    avgGameDurations,
+    avgGameDuration,
     leaderboard,
     scoreInsights,
     setTitle,
@@ -180,7 +180,7 @@ export const Home: React.FC<HomeProps> = ({
                     </div> */}
                 </div>
             </div>
-            {/* <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
+            <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
                 <div className="card-body p-2">
                     <h2 className="card-title">AVG Game Durations</h2>
                     <table className="table table-zebra">
@@ -193,7 +193,7 @@ export const Home: React.FC<HomeProps> = ({
                         </thead>
                         <tbody>
                             {
-                                avgGameDurations.map(
+                                avgGameDuration.map(
                                     x => (
                                         <tr
                                             key={x.numberOfPlayers}
@@ -215,7 +215,7 @@ export const Home: React.FC<HomeProps> = ({
                         </tbody>
                     </table>
                 </div>
-            </div> */}
+            </div>
                         
         </>
     )
