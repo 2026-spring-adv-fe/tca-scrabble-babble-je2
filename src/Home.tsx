@@ -11,11 +11,11 @@ type HomeProps = {
     scoreInsights: ScoreInsights,
     setTitle: (t: string) => void,
     // gameHistory: any,
-    gameHistory: {
-        date: string;
-        duration: string;
-        players: string;
-    }[];
+    // gameHistory: {
+    //     date: string;
+    //     duration: string;
+    //     players: string;
+    // }[];
 };
 
 // export const gameHistory
