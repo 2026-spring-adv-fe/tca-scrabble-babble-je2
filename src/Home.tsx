@@ -188,10 +188,10 @@ export const Home: React.FC<HomeProps> = ({
                                         <div className="sm:col-span-2 rounded-lg bg-base-100 p-2">
                                             <div className="text-[0.75rem] uppercase text-base-content/70">Multipliers</div>
                                             <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
-                                                <span className="badge badge-outline">DL {x.doubleLetterCount}</span>
-                                                <span className="badge badge-outline">TL {x.tripleLetterCount}</span>
-                                                <span className="badge badge-outline">DW {x.doubleWordCount}</span>
-                                                <span className="badge badge-outline">TW {x.tripleWordCount}</span>
+                                                <span className="badge badge-accent">DL {x.doubleLetterCount}</span>
+                                                <span className="badge badge-accent">TL {x.tripleLetterCount}</span>
+                                                <span className="badge badge-accent">DW {x.doubleWordCount}</span>
+                                                <span className="badge badge-accent">TW {x.tripleWordCount}</span>
                                             </div>
                                         </div>
                                     </div>
