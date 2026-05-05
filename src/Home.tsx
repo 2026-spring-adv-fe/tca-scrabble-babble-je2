@@ -118,48 +118,87 @@ export const Home: React.FC<HomeProps> = ({
             <div className="card bg-base-100 w-full shadow-lg my-2 overflow-x-scroll">
                 <div className="card-body p-2">
                     <h2 className="card-title">Player Stats & Leaderboard</h2>
-                    <table className="table table-xs">
-                        <thead>
-                            <tr>
-                                <th>Player</th>
-                                <th>W</th>
-                                <th>L</th>
-                                <th>W%</th>
-                                <th>Avg Word</th>
-                                <th>Avg Game</th>
-                                <th>Cumulative</th>
-                                <th colSpan={4} className="text-center">Plays with Multipliers</th>
-                            </tr>
-                            <tr>
-                                <th colSpan={7}></th>
-                                <th>DL</th>
-                                <th>TL</th>
-                                <th>DW</th>
-                                <th>TW</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                leaderboard.map(
-                                    x => (
-                                        <tr key={x.name}>
-                                            <td>{x.name}</td>
-                                            <td>{x.wins}</td>
-                                            <td>{x.losses}</td>
-                                            <td>{x.avg}</td>
-                                            <td>{x.avgWordScore}</td>
-                                            <td>{x.avgGameScore}</td>
-                                            <td>{x.totalGameScore}</td>
-                                            <td>{x.doubleLetterCount}</td>
-                                            <td>{x.tripleLetterCount}</td>
-                                            <td>{x.doubleWordCount}</td>
-                                            <td>{x.tripleWordCount}</td>
-                                        </tr>
+                    <div className="hidden sm:block overflow-x-auto">
+                        <table className="table table-xs table-fixed w-full text-[0.8rem] sm:text-xs">
+                            <thead>
+                                <tr>
+                                    <th className="whitespace-nowrap">Player</th>
+                                    <th className="whitespace-nowrap">W</th>
+                                    <th className="whitespace-nowrap">L</th>
+                                    <th className="whitespace-nowrap">W%</th>
+                                    <th className="whitespace-nowrap">Avg Word</th>
+                                    <th className="whitespace-nowrap">Avg Game</th>
+                                    <th className="whitespace-nowrap">Cumulative</th>
+                                    <th colSpan={4} className="text-center">Plays with Multipliers</th>
+                                </tr>
+                                <tr>
+                                    <th colSpan={7}></th>
+                                    <th className="whitespace-nowrap">DL</th>
+                                    <th className="whitespace-nowrap">TL</th>
+                                    <th className="whitespace-nowrap">DW</th>
+                                    <th className="whitespace-nowrap">TW</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    leaderboard.map(
+                                        x => (
+                                            <tr key={x.name}>
+                                                <td>{x.name}</td>
+                                                <td>{x.wins}</td>
+                                                <td>{x.losses}</td>
+                                                <td>{x.avg}</td>
+                                                <td>{x.avgWordScore}</td>
+                                                <td>{x.avgGameScore}</td>
+                                                <td>{x.totalGameScore}</td>
+                                                <td>{x.doubleLetterCount}</td>
+                                                <td>{x.tripleLetterCount}</td>
+                                                <td>{x.doubleWordCount}</td>
+                                                <td>{x.tripleWordCount}</td>
+                                            </tr>
+                                        )
                                     )
-                                )
-                            }
-                        </tbody>
-                    </table>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="space-y-3 sm:hidden">
+                        {
+                            leaderboard.map((x) => (
+                                <div key={x.name} className="card bg-base-200 shadow-sm p-3">
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div>
+                                            <div className="text-base font-semibold">{x.name}</div>
+                                            <div className="text-sm text-base-content/70">W {x.wins} • L {x.losses} • W% {x.avg}</div>
+                                        </div>
+                                        <div className="text-right text-sm">
+                                            <div>Avg Word</div>
+                                            <div className="font-semibold">{x.avgWordScore}</div>
+                                        </div>
+                                    </div>
+                                    <div className="mt-3 grid gap-2 sm:grid-cols-2 text-sm">
+                                        <div className="rounded-lg bg-base-100 p-2">
+                                            <div className="text-[0.75rem] uppercase text-base-content/70">Avg Game</div>
+                                            <div className="font-semibold">{x.avgGameScore}</div>
+                                        </div>
+                                        <div className="rounded-lg bg-base-100 p-2">
+                                            <div className="text-[0.75rem] uppercase text-base-content/70">Cumulative</div>
+                                            <div className="font-semibold">{x.totalGameScore}</div>
+                                        </div>
+                                        <div className="sm:col-span-2 rounded-lg bg-base-100 p-2">
+                                            <div className="text-[0.75rem] uppercase text-base-content/70">Multipliers</div>
+                                            <div className="mt-2 grid grid-cols-2 gap-2 text-xs">
+                                                <span className="badge badge-outline">DL {x.doubleLetterCount}</span>
+                                                <span className="badge badge-outline">TL {x.tripleLetterCount}</span>
+                                                <span className="badge badge-outline">DW {x.doubleWordCount}</span>
+                                                <span className="badge badge-outline">TW {x.tripleWordCount}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
                     {/* Debug output for Play moves and word scores per player */}
                     {/* <div className="mt-4">
                         <h3 className="font-bold">Debug: Player Play Moves & Word Scores</h3>
