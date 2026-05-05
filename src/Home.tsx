@@ -54,7 +54,7 @@ export const Home: React.FC<HomeProps> = ({
                     className="btn btn-outline btn-primary btn-lg w-full"
                     onClick={() => nav('/play')}
                 >
-                    Resume Game
+                    Resume or Start Game
                 </button>
             </div>
 
@@ -76,39 +76,39 @@ export const Home: React.FC<HomeProps> = ({
                                 <th>{generalFacts.longestGame}</th>
                             </tr>
                             <tr>
-                                <td>Total Number of Games Played</td>
+                                <td>Games Played</td>
                                 <th>{generalFacts.totalGames}</th>
                             </tr>
                             <tr>
-                                <td>Total Player Entries</td>
+                                <td>Player Entries</td>
                                 <th>{scoreInsights.totalPlayerEntries}</th>
                             </tr>
                             <tr>
-                                <td>Total Number of Player Moves - all Move Types</td>
+                                <td>Player Moves - all Types</td>
                                 <th>{scoreInsights.totalMoves}</th>
                             </tr>
                             <tr>
-                                <td>Mean Moves per Game</td>
+                                <td>Avg Moves per Game</td>
                                 <th>{scoreInsights.avgMovesPerGame}</th>
                             </tr>
                             <tr>
-                                <td>Highest Single Player-Word-Score</td>
+                                <td>Max Word Score</td>
                                 <th>{scoreInsights.topWordScoreTotal}</th>
                             </tr>
                             <tr>
-                                <td>Mean Player-Word-Score (Play moves only)</td>
+                                <td>Avg Word Score</td>
                                 <th>{scoreInsights.avgWordScorePerPlayerGame}</th>
                             </tr>
                             <tr>
-                                <td>Mean Player-Move-Score (all move types)</td>
+                                <td>Avg Move Score</td>
                                 <th>{scoreInsights.avgMoveScore}</th>
                             </tr>
                             <tr>
-                                <td>Highest Single Game Score</td>
+                                <td>Max Game Score</td>
                                 <th>{scoreInsights.topGameScore}</th>
                             </tr>
                             <tr>
-                                <td>Mean Game Score</td>
+                                <td>Avg Game Score</td>
                                 <th>{scoreInsights.avgGameScorePerPlayerGame}</th>
                             </tr>
                         </tbody>
@@ -124,10 +124,14 @@ export const Home: React.FC<HomeProps> = ({
                                 <th>Player</th>
                                 <th>W</th>
                                 <th>L</th>
-                                <th>W %</th>
+                                <th>W%</th>
                                 <th>Avg Word</th>
                                 <th>Avg Game</th>
                                 <th>Cumulative</th>
+                                <th colSpan={4} className="text-center">Plays with Multipliers</th>
+                            </tr>
+                            <tr>
+                                <th colSpan={7}></th>
                                 <th>DL</th>
                                 <th>TL</th>
                                 <th>DW</th>
@@ -182,13 +186,13 @@ export const Home: React.FC<HomeProps> = ({
             </div>
             <div className="card bg-base-100 w-full shadow-lg my-5 overflow-x-scroll">
                 <div className="card-body p-2">
-                    <h2 className="card-title">AVG Game Durations</h2>
+                    <h2 className="card-title">Game Durations (AVG) by Number of Players</h2>
                     <table className="table table-zebra">
                         <thead>
                             <tr>
-                                <th># PLAYERS</th>
-                                <th># GAMES</th>
-                                <th>AVG DURATION</th>
+                                <th>Players</th>
+                                <th>Games</th>
+                                <th>Avg Duration</th>
                             </tr>
                         </thead>
                         <tbody>

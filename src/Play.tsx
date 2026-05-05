@@ -197,9 +197,25 @@ export const Play: React.FC<PlayProps> = ({
 
     if (!players || players.length === 0) {
         return (
-            <div className="text-center">
-                <p className="text-lg font-semibold">No players have been selected.</p>
-                <p className="mt-2">Go back to setup and choose 2 to 4 players.</p>
+            <div className="flex flex-col items-center justify-center gap-4">
+                <div className="text-center">
+                    <p className="text-lg font-semibold">No players have been selected.</p>
+                    <p className="mt-2">Go to setup and choose 2 to 4 players.</p>
+                </div>
+                <div className="flex flex-col gap-2 w-full sm:w-64">
+                    <button
+                        className="btn btn-outline btn-primary btn-lg w-full"
+                        onClick={() => nav("/setup")}
+                    >
+                        Setup
+                    </button>
+                    <button
+                        className="btn btn-outline btn-secondary btn-lg w-full"
+                        onClick={() => nav("/")}
+                    >
+                        Home
+                    </button>
+                </div>
             </div>
         );
     }
