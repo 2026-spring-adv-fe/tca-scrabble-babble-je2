@@ -48,13 +48,7 @@ export const Home: React.FC<HomeProps> = ({
                     className="btn btn-outline btn-secondary btn-lg w-full"
                     onClick={() => nav('/setup')}
                 >
-                    Setup a Game
-                </button>
-                <button
-                    className="btn btn-outline btn-primary btn-lg w-full"
-                    onClick={() => nav('/play')}
-                >
-                    Resume or Start Game
+                    Start a New Game
                 </button>
             </div>
 
