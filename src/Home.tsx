@@ -84,13 +84,17 @@ export const Home: React.FC<HomeProps> = ({
                                 <th>{scoreInsights.totalPlayerEntries}</th>
                             </tr>
                             <tr>
-                                <td>Player Moves - all Types</td>
+                                <td>Player Moves (incl. swaps and skips)</td>
                                 <th>{scoreInsights.totalMoves}</th>
                             </tr>
                             <tr>
                                 <td>Avg Moves per Game</td>
                                 <th>{scoreInsights.avgMovesPerGame}</th>
                             </tr>
+                             <tr>
+                                <td>Min Word Score</td>
+                                <th>{scoreInsights.lowestWordScore}</th>
+                            </tr>                           
                             <tr>
                                 <td>Max Word Score</td>
                                 <th>{scoreInsights.topWordScoreTotal}</th>

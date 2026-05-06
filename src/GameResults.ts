@@ -79,8 +79,8 @@ export type ScoreInsights = {
     avgMoveScore: string; // All move types
     avgGameScorePerPlayerGame: string;
     topWordScoreTotal: number;
-    topGameScore: number;
-};
+    lowestWordScore: number;
+    topGameScore: number;};
 
 //
 // Exported functions..
@@ -202,6 +202,13 @@ export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
         ? totalGameScore / totalPlayerEntries
         : 0;
     // Top single word score from all moves
+    const lowestWordScore = totalMoves > 0
+        ? Math.min(
+            ...allMoves
+            .map(move => move.wordScore)
+            .filter(score => score > 0)
+        )
+        : 0;
     const topWordScoreTotal = totalMoves > 0
         ? Math.max(...allMoves.map((move) => move.wordScore))
         : 0;
@@ -218,6 +225,7 @@ export const getScoreInsights = (games: GameResult[]): ScoreInsights => {
         avgWordScorePerPlayerGame: `${avgWordScorePerPlayerGame.toFixed(1)}`,
         avgMoveScore: `${avgMoveScore.toFixed(1)}`,
         avgGameScorePerPlayerGame: `${avgGameScorePerPlayerGame.toFixed(1)}`,
+        lowestWordScore,
         topWordScoreTotal,
         topGameScore,
     };
