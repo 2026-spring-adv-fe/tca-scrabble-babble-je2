@@ -7,7 +7,7 @@ import { } from './tca-cloud-api';
 
 export type MoveType = "Play" | "Swap" | "Pass" | "Out";
 
-export type TileMultiplier = "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
+export type TileMultiplier = "None" | "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
 
 export type MoveRecord = {
     moveNumber: number;
@@ -50,6 +50,7 @@ export type LeaderboardEntry = {
     totalGameScore: number;
     avgGameScore: string;
     name: string;
+    baseLetterCount: number;
     doubleLetterCount: number;
     tripleLetterCount: number;
     doubleWordCount: number;
@@ -351,6 +352,10 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
         const playerMoves = games
             .flatMap(x => x.moves)
             .filter(x => x.player === player && x.tileMultipliers && Array.isArray(x.tileMultipliers));
+        const baseLetterCount = playerMoves.reduce(
+            (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "None").length ?? 0),
+            0
+        );
         const doubleLetterCount = playerMoves.reduce(
             (acc, move) => acc + (move.tileMultipliers?.filter(t => t === "Dbl Letter").length ?? 0),
             0
@@ -384,6 +389,7 @@ export const getAvgGameDurationsByPlayerCount = (results: GameResult[]): AvgGame
             totalGameScore,
             avgGameScore: `${avgGameScore.toFixed(1)}`,
             name: player,
+            baseLetterCount,
             doubleLetterCount,
             tripleLetterCount,
             doubleWordCount,
