@@ -8,9 +8,9 @@ type PlayProps = {
     players?: string[];
 };
 
-type MoveType = "Play" | "Swap" | "Pass" | "Out";
+type MoveType = "Play" | "Swap" | "Pass" | "Out" | null;
 
-type TileMultiplier = "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
+type TileMultiplier = "None" | "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
 
 // type currentRound = number;
 
@@ -39,7 +39,7 @@ export const Play: React.FC<PlayProps> = ({
     const nav = useNavigate();
     const [startTimestamp] = useState(new Date().toISOString());
     const [moves, setMoves] = useState<MoveRecord[]>([]);
-    const [currentMoveType, setCurrentMoveType] = useState<MoveType>("Play");
+    const [currentMoveType, setCurrentMoveType] = useState<MoveType | null>(null);
     const [wordScore, setWordScore] = useState("");
     const [activePlayerIndex, setActivePlayerIndex] = useState(0);
     const [tileAdjustments, setTileAdjustments] = useState<Record<string, string>>(
@@ -75,8 +75,8 @@ export const Play: React.FC<PlayProps> = ({
         : 1;
 
     const normalizedWordScore = currentMoveType === "Play"
-        ? Math.max(0, Number.parseInt(wordScore) || 0)
-        : 0;
+        ? Math.max(0, Number.parseInt(wordScore) || 0).toString()
+        : "0";
 
     const playerTotals = useMemo(() => {
         if (!players) {
@@ -103,7 +103,19 @@ export const Play: React.FC<PlayProps> = ({
             );
     }, [moves, players, tileAdjustments]);
 
-    const canAddMove = Boolean(players && players.length > 0 && !isGameFinished && (currentMoveType !== "Play" || wordScore.length > 0));
+    const hasMoveType = currentMoveType !== null;
+    const hasWordScore = normalizedWordScore.trim() !== "";
+    const hasMultiplier = selectedTileMultipliers !== "";
+
+    const canAddMove = 
+        players && 
+        players.length > 0 && 
+        !isGameFinished &&
+        hasMoveType &&
+        (
+            currentMoveType !== "Play" ||
+            (hasWordScore && hasMultiplier)
+        );
 
     const addMove = () => {
         const nextMoveNumber = moves.length + 1;
@@ -146,8 +158,8 @@ export const Play: React.FC<PlayProps> = ({
 
     const rematch = () => {
         setMoves([]);
-        setCurrentMoveType("Play");
-        setWordScore("0");
+        setCurrentMoveType(null);
+        setWordScore("");
         setActivePlayerIndex(0);
         setTileAdjustments(
             Object.fromEntries((players ?? []).map((player) => [player, ""]))
@@ -335,7 +347,7 @@ export const Play: React.FC<PlayProps> = ({
                             <span className="label-text">Tile Multipliers</span>
                         </label>
                         <div className="flex gap-4">
-                            {(["Dbl Letter", "Trpl Letter", "Dbl Word", "Trpl Word"] as TileMultiplier[]).map((mult) => (
+                            {(["None", "Dbl Letter", "Trpl Letter", "Dbl Word", "Trpl Word"] as TileMultiplier[]).map((mult) => (
                                 <label key={mult} className="flex items-center gap-2">
                                     <input
                                         type="checkbox" className="checkbox checkbox-info" 
@@ -419,7 +431,6 @@ export const Play: React.FC<PlayProps> = ({
                                     <th>Move</th>
                                     <th>Word Score</th>
                                     <th>Tile Multipliers</th>
-                                    {/* <th>Score Delta</th> */}
                                 </tr>
                             </thead>
                             <tbody>
@@ -431,7 +442,6 @@ export const Play: React.FC<PlayProps> = ({
                                         <td>{move.moveType}</td>
                                         <td>{move.wordScore}</td>
                                         <td>{move.tileMultipliers?.join(", ") ?? ""}</td>
-                                        {/* <td>{move.scoreDelta}</td> */}
                                     </tr>
                                 ))}
                             </tbody>
