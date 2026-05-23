@@ -1,0 +1,16 @@
+20260523
+Tile-Adjustment input, ghp, mobile, iPhone16
+no incrementer in input box; only numerical input, so cursoring into the ta box 
+brings up only the numberical key pad, so no way to enter a negative value (<0)
+
+Needed solution:  modify the data type in the input to accept non numerical characters, or add an incrementer
+
+20260522
+Finish-Game button does not disengage/disable after clicking and saving game data;
+Because I expected the button to disable after finishing a game, I mistakenly thought
+the appearance of the active button meant that the click "didn't take," and I clicked it
+multiple times.  After leaving the playscreen and going Home, I discovered on the stats
+that the same game had been added multiple times to the saved data/stats/leaderboard.  
+
+Needed solution: Modify finish-game function to change state after successful saving of game, and disable button until 
+a new game is started and scores have been entered.
