@@ -44,7 +44,7 @@ const App = () => {
   useEffect(
     () => {
     const loadTheme = async () => {
-      const result = await localforage.getItem<string>("theme") ?? "garden";
+      const result = await localforage.getItem<string>("theme") ?? "autumn";
 
       if (!ignore)
         setTheme(result);
@@ -181,16 +181,16 @@ const App = () => {
             type="checkbox"
             checked=
               {
-                "garden" !== theme
+                "autumn" !== theme
               }
 
             onChange={
               async () => {
                 const result = await localforage.setItem<string>(
                   'theme', 
-                  theme === "garden"
-                    ? "dracula"
-                    : "garden",
+                  theme === "autumn"
+                    ? "night"
+                    : "autumn",
                 );
                   setTheme(
                     result

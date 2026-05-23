@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import type { GeneralFacts, LeaderboardEntry, ScoreInsights, AvgGameDuration } from "./GameResults";
 import { useEffect } from "react";
 
-export const APP_TITLE = "Scrabble-Babble! A Scrabble Companion";
+export const APP_TITLE = "Scrabble-Babble!🤭🤣A Scrabble Companion";
 
 type HomeProps = {
     generalFacts: GeneralFacts,

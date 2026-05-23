@@ -284,23 +284,23 @@ export const Play: React.FC<PlayProps> = ({
             {showExitConfirm && (
                 <div className="modal modal-open">
                     <div className="modal-box">
-                        <h3 className="font-bold text-lg">Exit game?</h3>
+                        <h3 className="font-bold text-lg">Are you sure you want to go Home?</h3>
                         <p className="py-4">
-                            Current game entries will be lost if you leave before finishing this game.
-                            Do you want to exit and return home?
+                            ⚠️Exiting before you Finish Game will delete current entries!
+                            Short on time? "Finish Game" while you're ahead!🏅 Declare a fast-game winner and save your stats!
                         </p>
                         <div className="modal-action">
                             <button
-                                className="btn btn-error"
+                                className="btn btn-warning"
                                 onClick={confirmExitHome}
                             >
-                                Exit game and return Home
+                                Take me Home
                             </button>
                             <button
                                 className="btn"
                                 onClick={() => setShowExitConfirm(false)}
                             >
-                                Cancel and resume game
+                                I'll stay and play! 
                             </button>
                         </div>
                     </div>
