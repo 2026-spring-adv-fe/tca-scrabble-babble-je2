@@ -8,7 +8,8 @@ type PlayProps = {
     players?: string[];
 };
 
-type MoveType = "Play" | "Swap" | "Pass" | "Out" | null;
+type MoveType = "Play" | "Swap" | "Pass" | "Out";
+type CurrentMoveType = MoveType | null;
 
 type TileMultiplier = "None" | "Dbl Letter" | "Trpl Letter" | "Dbl Word" | "Trpl Word";
 
@@ -39,7 +40,7 @@ export const Play: React.FC<PlayProps> = ({
     const nav = useNavigate();
     const [startTimestamp] = useState(new Date().toISOString());
     const [moves, setMoves] = useState<MoveRecord[]>([]);
-    const [currentMoveType, setCurrentMoveType] = useState<MoveType | null>(null);
+    const [currentMoveType, setCurrentMoveType] = useState<CurrentMoveType>(null);
     const [wordScore, setWordScore] = useState("");
     const [activePlayerIndex, setActivePlayerIndex] = useState(0);
     const [tileAdjustments, setTileAdjustments] = useState<Record<string, string>>(
@@ -52,9 +53,31 @@ export const Play: React.FC<PlayProps> = ({
     // FOR SCENARIOS WHERE THE SAME MULTIPLIER-TYPE OCCURS IN THE SAME WORD/PLAY - NOT A FREQUENT OCCURRANCE, BUT HAPPENS.
     const [selectedTileMultipliers, setSelectedTileMultipliers] = useState<TileMultiplier[]>([]);
     const [completedGame, setCompletedGame] = useState<GameResult | null>(null);
+    const [showExitConfirm, setShowExitConfirm] = useState(false);
     const isGameFinished = completedGame !== null;
 
 
+
+    const hasUnsavedGame = !isGameFinished && (
+        moves.length > 0 ||
+        currentMoveType !== null ||
+        wordScore.trim() !== "" ||
+        selectedTileMultipliers.length > 0
+    );
+
+    const handleHomeClick = () => {
+        if (hasUnsavedGame) {
+            setShowExitConfirm(true);
+            return;
+        }
+
+        nav("/");
+    };
+
+    const confirmExitHome = () => {
+        setShowExitConfirm(false);
+        nav("/");
+    };
 
 // CONSIDER ADDING SOME CONSTRAINT ON THE ABILITY TO INPUT A TILE-ADJUSTMENT IN MID-PLAY - A PLAYER SHOULD BE "OUT" OF THE GAME AND BEFORE THE GAME
 // IS FINISHED TO ENSURE GAME SCORE IS PROPERLY TABULATED, ONLY ONE TILE-ADJUSTMENT IS ALLOWED PER HAME, AND IS NOT ENTERED IN ERROR AFFECTING A PLAYER
@@ -75,8 +98,8 @@ export const Play: React.FC<PlayProps> = ({
         : 1;
 
     const normalizedWordScore = currentMoveType === "Play"
-        ? Math.max(0, Number.parseInt(wordScore) || 0).toString()
-        : "0";
+        ? Math.max(0, Number.parseInt(wordScore) || 0)
+        : 0;
 
     const playerTotals = useMemo(() => {
         if (!players) {
@@ -104,8 +127,8 @@ export const Play: React.FC<PlayProps> = ({
     }, [moves, players, tileAdjustments]);
 
     const hasMoveType = currentMoveType !== null;
-    const hasWordScore = normalizedWordScore.trim() !== "";
-    const hasMultiplier = selectedTileMultipliers !== "";
+    const hasValidWordScore = Number.parseInt(wordScore) > 0;
+    const hasMultiplier = selectedTileMultipliers.length > 0;
 
     const canAddMove = 
         players && 
@@ -114,7 +137,7 @@ export const Play: React.FC<PlayProps> = ({
         hasMoveType &&
         (
             currentMoveType !== "Play" ||
-            (hasWordScore && hasMultiplier)
+            (hasValidWordScore && hasMultiplier)
         );
 
     const addMove = () => {
@@ -127,7 +150,7 @@ export const Play: React.FC<PlayProps> = ({
             moveNumber: nextMoveNumber,            
             roundNumber: currentRound,
             player: activePlayer,
-            moveType: currentMoveType,
+            moveType: currentMoveType!,
             wordScore: normalizedWordScore,
             tileMultipliers: selectedTileMultipliers.length > 0 ? [...selectedTileMultipliers] : undefined,
             scoreDelta: normalizedWordScore,
@@ -140,6 +163,7 @@ export const Play: React.FC<PlayProps> = ({
 
         setWordScore("");
         setSelectedTileMultipliers([]);
+        setCurrentMoveType(null);
 
         setActivePlayerIndex((previousIndex) => {
             if (!players || players.length === 0) {
@@ -246,7 +270,7 @@ export const Play: React.FC<PlayProps> = ({
             <div className="flex flex-col gap-2 mb-4 w-full lg:w-64">
                 <button
                     className="btn btn-outline btn-primary btn-lg w-full"
-                    onClick={() => nav("/")}
+                    onClick={handleHomeClick}
                 >
                     Home
                 </button>
@@ -257,6 +281,31 @@ export const Play: React.FC<PlayProps> = ({
                     Setup
                 </button>
             </div>
+            {showExitConfirm && (
+                <div className="modal modal-open">
+                    <div className="modal-box">
+                        <h3 className="font-bold text-lg">Exit game?</h3>
+                        <p className="py-4">
+                            Current game entries will be lost if you leave before finishing this game.
+                            Do you want to exit and return home?
+                        </p>
+                        <div className="modal-action">
+                            <button
+                                className="btn btn-error"
+                                onClick={confirmExitHome}
+                            >
+                                Exit game and return Home
+                            </button>
+                            <button
+                                className="btn"
+                                onClick={() => setShowExitConfirm(false)}
+                            >
+                                Cancel and resume game
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             {isGameFinished && completedGame && (
                 <div className="card bg-neutral text-neutral-content shadow-lg p-4 mb-4">
                     <div className="grid gap-4 lg:grid-cols-[auto_1fr] items-center">
@@ -354,11 +403,21 @@ export const Play: React.FC<PlayProps> = ({
                                         checked={selectedTileMultipliers.includes(mult)}
                                         disabled={currentMoveType !== "Play" || isGameFinished}
                                         onChange={() => {
-                                            setSelectedTileMultipliers((prev) =>
-                                                prev.includes(mult)
-                                                    ? prev.filter((m) => m !== mult)
-                                                    : [...prev, mult]
-                                            );
+                                            setSelectedTileMultipliers((prev) => {
+                                                const isSelected = prev.includes(mult);
+
+                                                if (isSelected) {
+                                                    return prev.filter((m) => m !== mult);
+                                                }
+
+                                                if (mult === "None") {
+                                                    return ["None"];
+                                                }
+
+                                                return prev.includes("None")
+                                                    ? [mult]
+                                                    : [...prev, mult];
+                                            });
                                         }}
                                     />
                                     {mult}
