@@ -81,7 +81,8 @@ export type ScoreInsights = {
     avgGameScorePerPlayerGame: string;
     topWordScoreTotal: number;
     lowestWordScore: number;
-    topGameScore: number;};
+    topGameScore: number;
+};
 
 //
 // Exported functions..
